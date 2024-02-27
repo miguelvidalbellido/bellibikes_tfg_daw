@@ -1,0 +1,19 @@
+[
+    {
+        "compatible": true,
+        "description": "Permite importar clientes, proveedores, productos, facturas, asientos, etc... desde archivos de Excel o csv.",
+        "enabled": true,
+        "folder": "CSVimport",
+        "hidden": false,
+        "installed": true,
+        "min_version": 2022.6,
+        "min_php": 7.2,
+        "name": "CSVimport",
+        "order": 1,
+        "post_disable": false,
+        "post_enable": false,
+        "require": [],
+        "require_php": [],
+        "version": 4.9
+    }
+]

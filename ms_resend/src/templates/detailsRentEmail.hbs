@@ -1,0 +1,81 @@
+<!-- createBooking.hbs -->
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #000000;
+            color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            font-size: 24px;
+            color: #ffa500;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .content {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .highlight {
+            color: #ffa500;
+        }
+        .button {
+            background-color: #ffa500;
+            color: #ffffff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        p {
+            color: white;
+        }
+
+        b {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            Detalles de tu viaje
+        </div>
+        <div class="content">
+            <p>Hola <span class="highlight">{{name}}</span>,</p>
+            <p>¡Esperamos verte de nuevo pronto! Aquí están los detalles de tu viaje:</p>
+            <p><b>Fecha:</b> <span class="highlight">{{date}}</span><br>
+               <b>Estación de origen:</b> <span class="highlight">{{station_start}}</span><br>
+               <b>Estación de destino:</b> <span class="highlight">{{station_finish}}</span></p>
+            <p>Grácias por confiar en nosotros!!</p>
+            <p>Si tienes alguna pregunta o necesitas hacer un cambio en tu reserva, no dudes en contactarnos.</p>
+            {{!-- <a href="[URL para más detalles]" class="button">Ver Detalles</a> --}}
+        </div>
+        <div class="footer">
+            Gracias por elegirnos,<br>
+            <span class="highlight">OntiBikes</span>
+        </div>
+    </div>
+</body>
+</html>

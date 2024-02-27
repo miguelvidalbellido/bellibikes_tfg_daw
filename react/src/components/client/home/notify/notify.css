@@ -1,0 +1,25 @@
+notify_div {
+    position: 'fixed';
+    z-index: 500
+}
+
+notify_p {
+    position: 'fixed';
+    z-index: 501
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+  }
+  
+  .shake-animation {
+    animation: shake 1s ease-in-out both, pauseShake 4s ease-in-out 1s infinite;
+  }
+  
+  @keyframes pauseShake {
+    0%, 25%, 100% { transform: translateX(0); }
+    50% { transform: translateX(0); }
+  }
+  

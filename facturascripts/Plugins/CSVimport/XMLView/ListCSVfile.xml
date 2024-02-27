@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * This file is part of CSVimport plugin for FacturaScripts.
+ * Copyright (C) 2020-2023 Carlos Garcia Gomez <carlos@facturascripts.com>
+-->
+<view>
+    <columns>
+        <column name="code" display="none" order="100">
+            <widget type="text" fieldname="id"/>
+        </column>
+        <column name="name" order="110">
+            <widget type="text" fieldname="name"/>
+        </column>
+        <column name="profile" order="120">
+            <widget type="select" fieldname="profile" translate="true" required="true">
+                <values fieldtitle="customer-delivery-notes">customer-delivery-notes</values>
+                <values fieldtitle="accounting-entries">accounting-entries</values>
+                <values fieldtitle="customers">customers</values>
+                <values fieldtitle="contacts">contacts</values>
+                <values fieldtitle="manufacturers">manufacturers</values>
+                <values fieldtitle="customer-invoices">customer-invoices</values>
+                <values fieldtitle="supplier-invoices">supplier-invoices</values>
+                <values fieldtitle="families">families</values>
+                <values fieldtitle="products">products</values>
+                <values fieldtitle="supplier-products">supplier-products</values>
+                <values fieldtitle="suppliers">suppliers</values>
+                <values fieldtitle="variants">variants</values>
+            </widget>
+        </column>
+        <column name="template" order="130">
+            <widget type="text" fieldname="template"/>
+        </column>
+        <column name="import-mode" numcolumns="2" order="140">
+            <widget type="select" fieldname="mode" translate="true" required="true">
+                <values title="only-insert">insert</values>
+                <values title="only-update">update</values>
+                <values title="insert-update">insert-update</values>
+            </widget>
+        </column>
+        <column name="size" display="right" order="150">
+            <widget type="number" decimal="0" fieldname="size"/>
+        </column>
+        <column name="date" display="right" order="160">
+            <widget type="date" fieldname="date"/>
+        </column>
+    </columns>
+    <rows>
+        <row type="status">
+            <option color="warning" fieldname="size">null:</option>
+        </row>
+    </rows>
+</view>

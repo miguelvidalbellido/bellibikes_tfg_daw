@@ -1,0 +1,31 @@
+
+/////////////////////////////////////////////////////////////////////
+//////////////////////////  STATIONS  ///////////////////////////////
+/////////////////////////////////////////////////////////////////////
+
+INSERT INTO stations_station (uuid, name, latitude, longitude, status, description, img) VALUES ('1', 'Estacion 1', 38.82362225819358, -0.6022241210495841, 'OPEN', 'Descripcion de la estacion 1', 'img/path/estacion1.jpg');
+INSERT INTO stations_station (uuid, name, latitude, longitude, status, description, img) VALUES ('2', 'Estacion 2', 38.823166476734094, -0.6040003865994639, 'OPEN', 'Descripcion de la estacion 2', 'img/path/estacion2.jpg');
+INSERT INTO stations_station (uuid, name, latitude, longitude, status, description, img) VALUES ('3', 'Estacion 3', 38.824709333658774, -0.60179157143738, 'CLOSE', 'Descripcion de la estacion 3', 'img/path/estacion3.jpg');
+INSERT INTO stations_station (uuid, name, latitude, longitude, status, description, img) VALUES ('4', 'Estacion 4', 38.823702729370346, -0.6006158184075397, 'OPEN', 'Descripcion de la estacion 4', 'img/path/estacion4.jpg');
+INSERT INTO stations_station (uuid, name, latitude, longitude, status, description, img) VALUES ('5', 'Estacion 5', 38.822115534684386, -0.6083461382733217, 'CLOSE', 'Descripcion de la estacion 5', 'img/path/estacion5.jpg');
+INSERT INTO stations_station (uuid, name, latitude, longitude, status, description, img) VALUES ('6', 'Estacion 6', 38.82675667238844, -0.6148189166591379, 'CLOSE', 'Descripcion de la estacion 6', 'img/path/estacion6.jpg');
+INSERT INTO stations_station (uuid, name, latitude, longitude, status, description, img) VALUES ('7', 'Estacion 7', 38.82702545685905, -0.604752081221998, 'DISABLED', 'Descripcion de la estacion 7', 'img/path/estacion7.jpg');
+INSERT INTO stations_station (uuid, name, latitude, longitude, status, description, img) VALUES ('8', 'Estacion 8', 38.827972895339215, -0.6145254460125573, 'OPEN', 'Descripcion de la estacion 8', 'img/path/estacion8.jpg');
+INSERT INTO stations_station (uuid, name, latitude, longitude, status, description, img) VALUES ('9', 'Estacion 9', 38.82794660649267, -0.6036264609035809, 'OPEN', 'Descripcion de la estacion 9', 'img/path/estacion9.jpg');
+INSERT INTO stations_station (uuid, name, latitude, longitude, status, description, img) VALUES ('10', 'Estacion 10', 38.82262993327227, -0.605108236340822, 'OPEN', 'Descripcion de la estacion 10', 'img/path/estacion10.jpg');
+
+
+/////////////////////////////////////////////////////////////////////
+//////////////////////////  BIKES  //////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+
+INSERT INTO stations_bike(uuid, sname, status, model, brand, batery, lat, lng) VALUES('1001', 'ONT1001', 'a', 'husky', '701', '24', '0', '0');
+INSERT INTO stations_bike(uuid, sname, status, model, brand, batery, lat, lng) VALUES('1002', 'ONT1002', 'a', 'husky', '701', '24', '0', '0');
+INSERT INTO stations_bike(uuid, sname, status, model, brand, batery, lat, lng) VALUES('1003', 'ONT1003', 'a', 'husky', '701', '24', '0', '0');
+INSERT INTO stations_bike(uuid, sname, status, model, brand, batery, lat, lng) VALUES('1004', 'ONT1004', 'a', 'husky', '701', '24', '0', '0');
+INSERT INTO stations_bike(uuid, sname, status, model, brand, batery, lat, lng) VALUES('1005', 'ONT1005', 'a', 'husky', '701', '24', '0', '0');
+INSERT INTO stations_bike(uuid, sname, status, model, brand, batery, lat, lng) VALUES('1006', 'ONT1006', 'a', 'husky', '701', '24', '0', '0');
+INSERT INTO stations_bike(uuid, sname, status, model, brand, batery, lat, lng) VALUES('1007', 'ONT1007', 'a', 'husky', '701', '24', '0', '0');
+INSERT INTO stations_bike(uuid, sname, status, model, brand, batery, lat, lng) VALUES('1008', 'ONT1008', 'a', 'husky', '701', '24', '0', '0');
+INSERT INTO stations_bike(uuid, sname, status, model, brand, batery, lat, lng) VALUES('1009', 'ONT1009', 'a', 'husky', '701', '24', '0', '0');
+INSERT INTO stations_bike(uuid, sname, status, model, brand, batery, lat, lng) VALUES('1010', 'ONT1100', 'a', 'husky', '701', '24', '0', '0');

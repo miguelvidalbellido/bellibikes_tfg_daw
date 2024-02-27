@@ -1,0 +1,34 @@
+.container-incidents {
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .container-incidents h2 {
+    font-weight: bold;
+  }
+
+  .container-incidents label {
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .container-incidents select, textarea, button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  .container-incidents button {
+    background-color: #4caf50;
+    color: #fff;
+  }
+
+  .container-incidents button:hover {
+    background-color: #45a049;
+  }

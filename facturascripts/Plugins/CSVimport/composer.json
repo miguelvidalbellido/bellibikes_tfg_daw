@@ -1,0 +1,14 @@
+{
+  "config": {
+    "platform": {
+      "php": "7.2.5"
+    }
+  },
+  "require": {
+    "phpoffice/phpspreadsheet": "1.19.0",
+    "ext-fileinfo": "*",
+    "ext-json": "*",
+    "box/spout": "^3.3",
+    "ext-iconv": "*"
+  }
+}

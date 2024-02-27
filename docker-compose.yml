@@ -1,0 +1,169 @@
+version: "3.9"
+
+services:
+  bellibikes_django:
+    container_name: bellibikes_django
+    build: ./backend/django_backend
+    volumes:
+      - ./backend/django_backend:/app
+    ports:
+      - "9290:8090"
+    environment:
+      - PG_USER=${POSTGRES_USER}
+      - PG_PASSWORD=${POSTGRES_PASSWORD}
+      - PG_DB=${POSTGRES_DB}
+      - PG_PORT=5432
+      - PG_HOST=172.20.0.22
+      - CLAVE_API_FS=${CLAVE_API_FS}
+      - URL_FS=${URL_FS}
+      - VIRTUAL_HOST=bbdjango.bellidel.eu
+      - LETSENCRYPT_HOST=bbdjango.bellidel.eu
+      - LETSENCRYPT_EMAIL=admin@bellidel.com
+    depends_on:
+      - bellibikes_db
+    networks:
+      - bellibikes_net
+      - webproxy
+
+  bellibikes_db:
+    container_name: bellibikes_db
+    image: postgres:12
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - "9132:5432"
+    volumes:
+      - bellibikespgdata:/var/lib/postgresql/data
+    networks:
+      bellibikes_net:
+        ipv4_address: 172.20.0.22
+
+  bellibikes_pgadmin:
+    image: dpage/pgadmin4
+    container_name: bellibikes_pgadmin4_container
+    restart: always
+    ports:
+      - "9150:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+      - VIRTUAL_HOST=bbpgadmin.bellidel.eu
+      - LETSENCRYPT_HOST=bbpgadmin.bellidel.eu
+      - LETSENCRYPT_EMAIL=admin@bellidel.com
+    volumes:
+      - bellibikes-pgadmin-data:/var/lib/pgadmin
+    networks:
+      - bellibikes_net
+      - webproxy
+
+  bellibikes_frontend-react:
+    image: node:18.18
+    container_name: bellibikes_frontend_react
+    command: npm run dev
+    working_dir: /app
+    ports:
+      - "9273:5173"
+    environment:
+      - VIRTUAL_HOST=bellibikes.bellidel.eu
+      - LETSENCRYPT_HOST=bellibikes.bellidel.eu
+      - LETSENCRYPT_EMAIL=admin@bellidel.com
+      - CLAVE_API_FS_REACT=${CLAVE_API_FS_REACT}
+    volumes:
+      - ./react:/app
+    networks:
+      - webproxy
+  
+  # FASTIFY FOR FS
+
+  bellibikes_fastify:
+    container_name: bellibikes_fastify_app
+    build:
+      context: ./fastify_fs
+      dockerfile: Dockerfile
+    ports:
+      - "9105:3000"
+    volumes:
+      - ./fastify_fs:/usr/src/app
+      
+    environment:
+      - NODE_ENV=production
+      - VIRTUAL_HOST=bbfastify.bellidel.eu
+      - LETSENCRYPT_HOST=bbfastify.bellidel.eu
+      - LETSENCRYPT_EMAIL=admin@bellidel.com
+    restart: unless-stopped
+    networks:
+      - bellibikes_net
+      - webproxy
+
+  
+  
+  #FACTURASCRIPTS / MYSQL / ADMINER
+  bellibikes_mysql:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - 9108:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_FS_PASSWORD}
+    volumes:
+      - ./mysql:/var/lib/mysql
+    networks:
+      - bellibikes_net
+
+  bellibikes_facturascripts:
+    image: facturascripts/facturascripts:latest
+    restart: always
+    ports:
+      - 9189:80
+    volumes:
+      - ./facturascripts:/var/www/html
+    environment:
+      - VIRTUAL_HOST=bbfs.bellidel.eu
+      - LETSENCRYPT_HOST=bbfs.bellidel.eu
+      - LETSENCRYPT_EMAIL=admin@bellidel.com
+    networks:
+      - bellibikes_net
+      - webproxy
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 9091:8080
+    networks:
+      - bellibikes_net
+      - webproxy
+    
+  bellibikes_ms_resend_nodets:
+    build: ./ms_resend
+    ports:
+      - "9110:3000"
+    volumes:
+      - ./ms_resend:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - NODE_ENV=development
+      - VIRTUAL_HOST=bbresend.bellidel.eu
+      - LETSENCRYPT_HOST=bbresend.bellidel.eu
+      - LETSENCRYPT_EMAIL=admin@bellidel.com
+    networks:
+      - bellibikes_net
+      - webproxy
+
+
+volumes:
+  bellibikespgdata: {}
+  bellibikes-pgadmin-data: {}
+
+networks:
+  bellibikes_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16
+  webproxy:
+    external: true

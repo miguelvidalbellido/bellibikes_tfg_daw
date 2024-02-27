@@ -1,0 +1,1 @@
+a:2:{s:11:"codatributo";a:6:{s:4:"type";s:11:"varchar(20)";s:3:"key";s:3:"PRI";s:7:"default";N;s:5:"extra";s:0:"";s:11:"is_nullable";s:2:"NO";s:4:"name";s:11:"codatributo";}s:6:"nombre";a:6:{s:4:"type";s:12:"varchar(100)";s:3:"key";s:0:"";s:7:"default";N;s:5:"extra";s:0:"";s:11:"is_nullable";s:2:"NO";s:4:"name";s:6:"nombre";}}
