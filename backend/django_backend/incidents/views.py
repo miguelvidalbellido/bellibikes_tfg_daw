@@ -15,6 +15,7 @@ from users.models import User
 from stations.models import Bike
 from stations.models import Slot
 from core.permissions import IsAdmin
+import requests
 
 
 class IncidentView(viewsets.GenericViewSet):
@@ -127,6 +128,21 @@ class IncidentView(viewsets.GenericViewSet):
         }
 
         serializer_stage_default = StagesIncidentSerializer.create(StagesIncidentSerializer(), serializer_stage_context)
+
+        ################################################
+        ##               NOTIFICACION TELEGRAM
+        ################################################
+
+        try:
+            token = '7148193738:AAGruTZ6epTPtSsqnYrNP42d6QXQz9N9API'
+            chat_id = '243340167'
+            url = f'https://api.telegram.org/bot{token}/sendMessage'
+            data = {'chat_id': chat_id, 'text': f'Nueva incidencia creada sobre: {data["type"]} con la descripción: {data["description"]}'}
+
+            response = requests.post(url, data=data)
+        except Exception as e:
+            print(f"[ ADD - INCIDENT - TELEGRAM ] Ocurrio un error: {e}")
+            return Response({"error": "ADD INCIDENT - GET"}, status=status.HTTP_404_NOT_FOUND)
         
         
         return Response(serializer, status=status.HTTP_201_CREATED)

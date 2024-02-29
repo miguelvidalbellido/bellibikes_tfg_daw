@@ -43,7 +43,7 @@ const PricingPage = () => {
         <div className="">
           <div className="text-center font-semibold">
             <h1 className="text-5xl">
-              <span className="text-blue-700 tracking-wide">Flexible </span>
+              <span className="text-green-700 tracking-wide">Flexible </span>
               <span>Plans</span>
             </h1>
             <p className="pt-6 text-xl text-gray-400 font-normal w-full px-8 md:w-full">
@@ -51,19 +51,19 @@ const PricingPage = () => {
             </p>
             <button 
               onClick={() => handleTypeProducts('ANUAL')}
-              className={typeProducts === 'ANUAL' ? 'w-40 h-12 bg-blue-600 text-white rounded-xl m-4' : 'w-40 h-12 bg-gray-600 text-white rounded-xl m-4'}>
+              className={typeProducts === 'ANUAL' ? 'w-40 h-12 bg-green-600 text-white rounded-xl m-4' : 'w-40 h-12 bg-gray-600 text-white rounded-xl m-4'}>
               <span className="font-semibold">Planes Anuales</span>
             </button>
             <button 
               onClick={() => handleTypeProducts('MENSUAL')}
-              className={typeProducts === 'MENSUAL' ? 'w-40 h-12 bg-blue-600 text-white rounded-xl m-4' : 'w-40 h-12 bg-gray-600 text-white rounded-xl m-4'}>
+              className={typeProducts === 'MENSUAL' ? 'w-40 h-12 bg-green-600 text-white rounded-xl m-4' : 'w-40 h-12 bg-gray-600 text-white rounded-xl m-4'}>
               <span className="font-semibold">Planes Mensuales</span>
             </button>
-            <button 
+            {/* <button 
               onClick={() => handleTypeProducts('PAY-AS-YOU-GO')}
-              className={typeProducts === 'PAY-AS-YOU-GO' ? 'w-40 h-12 bg-blue-600 text-white rounded-xl m-4' : 'w-40 h-12 bg-gray-600 text-white rounded-xl m-4'}>
+              className={typeProducts === 'PAY-AS-YOU-GO' ? 'w-40 h-12 bg-green-600 text-white rounded-xl m-4' : 'w-40 h-12 bg-gray-600 text-white rounded-xl m-4'}>
               <span className="font-semibold">Pago por Viaje</span>
-            </button>
+            </button> */}
           </div>
           <div className="pt-24 flex flex-row">
             {

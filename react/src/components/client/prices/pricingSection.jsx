@@ -20,7 +20,7 @@ const PricingSection = ({products, addPlan}) => {
                         </p>
 
                         <a className="cursor-pointer" onClick={() => addPlan(products[0].idproducto)}>
-                            <p className="w-full py-4 bg-blue-600 mt-8 rounded-xl text-white">
+                            <p className="w-full py-4 bg-green-600 mt-8 rounded-xl text-white">
                                 <span className="font-medium">
                                     Seleccionar Plan
                                 </span>
@@ -45,7 +45,7 @@ const PricingSection = ({products, addPlan}) => {
                         </p>
 
                         <a className="cursor-pointer" onClick={() => addPlan(products[1].idproducto)}>
-                            <p className="w-full py-4 bg-blue-600 mt-8 rounded-xl text-white">
+                            <p className="w-full py-4 bg-green-600 mt-8 rounded-xl text-white">
                                 <span className="font-medium">
                                     Seleccionar Plan
                                 </span>
@@ -53,7 +53,7 @@ const PricingSection = ({products, addPlan}) => {
                         </a>
                     </div>
                     <div className="absolute top-4 right-4">
-                        <p className="bg-blue-700 font-semibold px-4 py-1 rounded-full uppercase text-xs">Popular</p>
+                        <p className="bg-green-700 font-semibold px-4 py-1 rounded-full uppercase text-xs">Popular</p>
                     </div>
                 </div>
                 <div className="w-96 p-8 bg-white text-center rounded-3xl pl-16 shadow-xl" key={products[2].idproducto}>
@@ -72,7 +72,7 @@ const PricingSection = ({products, addPlan}) => {
                         </p>
 
                         <a className="cursor-pointer" onClick={() => addPlan(products[2].idproducto)}>
-                            <p className="w-full py-4 bg-blue-600 mt-8 rounded-xl text-white">
+                            <p className="w-full py-4 bg-green-600 mt-8 rounded-xl text-white">
                                 <span className="font-medium">
                                     Seleccionar Plan
                                 </span>

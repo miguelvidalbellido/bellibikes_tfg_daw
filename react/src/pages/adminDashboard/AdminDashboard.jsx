@@ -4,6 +4,7 @@ import BikesList from './bikes/BikesList'
 import SlotsList from './slots/SlotList'
 import GraphicView from './graphicView/GraphicView'
 import Incidents from './incidents/Indicents'
+import HomeDashboard from './home/HomeDashboard'
 
 const AdminDashboard = () => {
   const [menuActivo, setMenuActivo] = useState("Inicio");
@@ -11,7 +12,7 @@ const AdminDashboard = () => {
   const renderContent = () => {
     switch (menuActivo) {
       case "Inicio":
-        return <div>Inicio</div>;
+        return <HomeDashboard />;
       case "Stations":
         return <StationsList />;
       case "Slots":
@@ -31,14 +32,14 @@ const AdminDashboard = () => {
 
   return (
     <div className="flex h-screen">
-        {/* Menú lateral izquierdo con estilo moderno */}
-        <div className="w-1/6 bg-gray-800 text-white p-4">
-            <ul className="space-y-2">
+        {/* Menú lateral izquierdo con estilo moderno y minimalista */}
+        <div className="w-1/6 bg-gray-100 text-gray-800 p-5 border-r-4 border-green-200">
+            <ul className="space-y-4">
                 {menuOptions.map((item, index) => (
                     <li
                         key={index}
-                        className={`px-4 py-2 rounded-md cursor-pointer ${
-                            menuActivo === item ? "bg-gray-700" : "hover:bg-gray-600"
+                        className={`px-4 py-3 rounded-lg cursor-pointer font-medium transition-colors duration-150 ${
+                            menuActivo === item ? "bg-emerald-500 text-white" : "hover:bg-green-500 hover:text-white"
                         }`}
                         onClick={() => setMenuActivo(item)}
                     >
@@ -48,9 +49,10 @@ const AdminDashboard = () => {
             </ul>
         </div>
 
-        {/* Contenido principal */}
-        <div className="w-5/6 p-4">
-            {renderContent()}
+        <div className="w-5/6 p-8 overflow-auto">
+            <Suspense fallback={<div>Loading...</div>}>
+              {renderContent()}
+            </Suspense>
         </div>
     </div>
 );

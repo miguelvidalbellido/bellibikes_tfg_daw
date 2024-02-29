@@ -1,27 +1,27 @@
-import React, { useState } from "react"
-import { useBikes } from "@/hooks/bikes/useBikes"
-import BikeCreate from "./BikeCreate"
-import BikeUpdate from "./BikeUpdate"
-import BikeDelete from "./BikeDelete"
+import React from "react";
+import { useBikes } from "@/hooks/bikes/useBikes";
+import BikeCreate from "./BikeCreate";
+import BikeUpdate from "./BikeUpdate";
+import BikeDelete from "./BikeDelete";
 
 const BikesList = () => {
     const { bikes, setBikes } = useBikes();
 
     const tarjetas = [
-        { titulo: "Tarjeta 1", descripcion: "Descripción 1" },
-        { titulo: "Tarjeta 2", descripcion: "Descripción 2" },
-        { titulo: "Tarjeta 3", descripcion: "Descripción 3" },
-        { titulo: "Tarjeta 4", descripcion: "Descripción 4" },
-      ];
+        { titulo: "Total Revenue", descripcion: "$33,261" },
+        { titulo: "Subscribers", descripcion: "481,095" },
+        { titulo: "Conversations", descripcion: "643,533" },
+        { titulo: "Modal Sale Rate", descripcion: "25%" },
+    ];
 
     return(
         <>
-        {/* Tarjetas horizontales */}
+        {/* Tarjetas horizontales al estilo de la imagen proporcionada */}
         <div className="flex justify-between mb-4 space-x-4">
           {tarjetas.map((card, index) => (
-            <div key={index} className="w-1/4 bg-gradient-to-br from-blue-200 to-blue-500 shadow-lg p-2">
-              <h3 className="font-bold">{card.titulo}</h3>
-              <p>{card.descripcion}</p>
+            <div key={index} className="w-1/4 bg-white shadow rounded-lg p-4 flex flex-col items-center justify-center">
+              <h3 className="text-sm font-semibold text-gray-700">{card.titulo}</h3>
+              <p className="text-lg font-bold text-gray-900">{card.descripcion}</p>
             </div>
           ))}
         </div>
@@ -32,7 +32,7 @@ const BikesList = () => {
         {/* Tabla responsive */}
         <div className="overflow-x-auto shadow-md rounded-lg mt-6">
           <table className="min-w-full table-auto">
-            <thead className="bg-gray-800 text-white">
+            <thead className="bg-emerald-500 text-white">
               <tr>
                 <th className="px-6 py-3 text-xs font-medium uppercase tracking-wider">Serial Name</th>
                 <th className="px-6 py-3 text-xs font-medium uppercase tracking-wider">Status</th>
@@ -63,4 +63,4 @@ const BikesList = () => {
     )
 }
 
-export default BikesList
+export default BikesList;

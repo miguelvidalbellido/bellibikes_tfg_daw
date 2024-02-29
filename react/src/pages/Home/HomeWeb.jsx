@@ -5,9 +5,9 @@ const HomeWeb = () => {
     return (
         <div>
             <HomeContent />
-            <div className='grid grid-cols-2 text-primary'>
+            {/* <div className='grid grid-cols-2 text-primary'>
                 
-            </div>
+            </div> */}
         </div>
     );
     }

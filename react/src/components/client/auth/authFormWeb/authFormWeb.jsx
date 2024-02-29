@@ -53,7 +53,7 @@ export default function UserAuthForm({ sendData, errorMSG, type }) {
               {...register('password')}
             />
           </div>
-          <Button disabled={isLoading}>
+          <Button disabled={isLoading} className='bg-green-600'>
             {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
@@ -65,11 +65,11 @@ export default function UserAuthForm({ sendData, errorMSG, type }) {
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t" />
         </div>
-        <div className="relative flex justify-center text-xs uppercase">
+        {/* <div className="relative flex justify-center text-xs uppercase">
           <span className="bg-background px-2 text-muted-foreground">
             ¿No tienes cuenta? <a onClick={() => redirects.register()}>Registrate</a>
           </span>
-        </div>
+        </div> */}
       </div>
     </>
   ) : (
@@ -108,7 +108,7 @@ export default function UserAuthForm({ sendData, errorMSG, type }) {
               {...register('email')}
             />
           </div>
-          <Button disabled={isLoading}>
+          <Button disabled={isLoading} className='bg-green-600'>
             {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
@@ -120,11 +120,11 @@ export default function UserAuthForm({ sendData, errorMSG, type }) {
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t" />
         </div>
-        <div className="relative flex justify-center text-xs uppercase">
+        {/* <div className="relative flex justify-center text-xs uppercase">
           <span className="bg-background px-2 text-muted-foreground">
             ¿Ya tienes cuenta? <a onClick={() => redirects.login()}>Acceder</a>          
           </span>
-        </div>
+        </div> */}
       </div>
     </>
   )
