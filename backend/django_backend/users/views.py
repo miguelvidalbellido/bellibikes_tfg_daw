@@ -94,6 +94,26 @@ class UserView(viewsets.GenericViewSet):
 
         serializer = userSerializer.login(serializer_context)
         return Response(serializer, status=status.HTTP_200_OK)
+    
+    def loginMantenance(self, request):
+
+        if 'user' not in request.data:
+            raise NotFound('User field is required')
+        
+        data = request.data['user']
+
+        required_fields = ['username', 'password']
+
+        check_all_fields(data, required_fields)
+        
+        serializer_context = {
+            'username': data['username'],
+            'password': data['password']
+        }
+
+
+        serializer = userSerializer.loginMantenance(serializer_context)
+        return Response(serializer, status=status.HTTP_200_OK)
 
 class UserAuthenticatedView(viewsets.GenericViewSet):
     
