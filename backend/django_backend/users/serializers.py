@@ -73,6 +73,46 @@ class userSerializer(serializers.ModelSerializer):
             },
             'token': user.token,
         }
+    
+    def loginMantenance(context):
+        username = context['username']
+        password = context['password']
+
+        if username is None:
+            raise NotFound('Username is required to login')
+        
+        if password is None:
+            raise NotFound('Password is required to login')
+        
+        try:
+            user = User.objects.get(username=username)
+            # user.countTokens = 0
+            user.save()
+        except:
+            raise serializers.ValidationError(
+                'Username or password incorrects.'
+            )
+            
+        
+        if not user.check_password(password):
+            raise serializers.ValidationError(
+                'Username or password incorrects.'
+            )
+        
+        if user.type != 'maint':
+            raise serializers.ValidationError(
+                'Username not type maintenance'
+            )
+        
+        
+        return {
+            'user': {
+                'username': user.username,
+                'email': user.email,
+                'type': user.type
+            },
+            'token': user.token,
+        }
         
         
     def getUserData(context):

@@ -13,22 +13,22 @@ const AdminDashboard = () => {
     switch (menuActivo) {
       case "Inicio":
         return <HomeDashboard />;
-      case "Stations":
+      case "Estaciones":
         return <StationsList />;
-      case "Slots":
+      case "Ranuras":
         return <SlotsList />;
-      case "Bikes":
+      case "Bicis":
         return <BikesList />;
-      case "GraphicView":
+      case "Vista Gráfica":
         return <GraphicView />;
-      case "Incidents":
+      case "Incidencias":
         return <Incidents />;
       default:
         return <div>Inicio</div>;
     }
   };
 
-  const menuOptions = ["Inicio", "Stations", "Slots", "Bikes", "GraphicView", "Incidents"]
+  const menuOptions = ["Inicio", "Estaciones", "Ranuras", "Bicis", "Vista Gráfica", "Incidencias"]
 
   return (
     <div className="flex h-screen">

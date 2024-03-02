@@ -3,15 +3,21 @@ import { useStations } from "@/hooks/stations/useStations"
 import StationUpdate from "./StationUpdate"
 import StationCreate from "./StationCreate"
 import StationDelete from "./StationDelete"
+import useStats from "@/hooks/stats/useStats"
 
 const StationList = () => {
     const { stations, setStations } = useStations();
+    const { statsStations, getDashboardStations } = useStats();
+
+    useState(() => {
+      getDashboardStations();
+    }, []);
 
     const tarjetas = [
-      { titulo: "Total Revenue", descripcion: "$33,261" },
-      { titulo: "Subscribers", descripcion: "481,095" },
-      { titulo: "Conversations", descripcion: "643,533" },
-      { titulo: "Modal Sale Rate", descripcion: "25%" },
+      { titulo: "Total estaciones", descripcion: statsStations.stations },
+      { titulo: "Estaciones Activas", descripcion: statsStations.stationsOpen },
+      { titulo: "Estaciones Mantenimiento", descripcion: statsStations.stationsMaintenance },
+      { titulo: "Estaciones Cerradas", descripcion: statsStations.stationsClose },
   ];
 
     return(
