@@ -5,10 +5,12 @@ import HomeIcon from '@/assets/icons/stats.svg';
 import IssueIcon from '@/assets/icons/check.svg';
 import ProductIcon from '@/assets/icons/scanner.svg';
 import { useNavigate } from "react-router-dom";
+import { useAuth } from '@/hooks/auth/useAuth';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate()
+  const { user } = useAuth()
 
   return (
     
@@ -32,16 +34,16 @@ const Navbar = () => {
             <img src={IssueIcon} alt="Incidencias" className="h-5 w-5 mr-2" />
             Incidencias
             </a>
-            <a href='#' className='py-4 px-2 text-gray-500 font-semibold hover:text-orange-400 flex items-center cursor-pointer'>
-            <img src={ProductIcon} alt="Productos" className="h-5 w-5 mr-2 " />
-            Productos
+            <a  onClick={() => navigate('/scan')} className='py-4 px-2 text-gray-500 font-semibold hover:text-orange-400 flex items-center cursor-pointer'>
+            <img src={ProductIcon} alt="Escaner" className="h-5 w-5 mr-2 " />
+            Escaner
             </a>
         </div>
           {/* Secondary Navbar items */}
           <div className='hidden md:flex items-center space-x-3'>
           <img src='https://picsum.photos/200/300' alt='Perfil de John Doe' className='w-10 h-10 rounded-full border border-gray-300' />
             <a href='#' className='py-4 px-2 text-gray-500 font-semibold flex items-center'>
-                John Doe
+                {user.username}
             </a>
             </div>
           {/* Mobile menu button */}
@@ -53,7 +55,7 @@ const Navbar = () => {
         </div>
       </div>
       {/* Mobile Menu */}
-      <div className={`absolute top-0 inset-x-0 p-2 transition transform origin-top-right ${isMenuOpen ? 'block' : 'hidden'}`}>
+      <div className={`absolute top-0 inset-x-0 mr-4 p-2 transition transform origin-top-right ${isMenuOpen ? 'block' : 'hidden'}`}>
         <div className='rounded-lg shadow-md bg-white ring-1 ring-black ring-opacity-5 overflow-hidden'>
           <div className='px-5 pt-4 flex items-center justify-between'>
             <div>
@@ -66,9 +68,9 @@ const Navbar = () => {
             </div>
           </div>
           <div className='px-2 pt-2 pb-3 space-y-1'>
-            <a href='#' className='block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50'>Inicio</a>
-            <a href='#' className='block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50'>Incidencias</a>
-            <a href='#' className='block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50'>Productos</a>
+            <a  onClick={() => navigate('/')} className='block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50'>Inicio</a>
+            <a  onClick={() => navigate('/incidents')} className='block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50'>Incidencias</a>
+            <a  onClick={() => navigate('/scan')} className='block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50'>Escaner</a>
           </div>
         </div>
       </div>
