@@ -1,1 +1,1 @@
-a:20:{i:0;s:8:"settings";i:1;s:5:"users";i:2;s:5:"pages";i:3;s:8:"empresas";i:4;s:9:"almacenes";i:5;s:11:"facturascli";i:6;s:18:"estados_documentos";i:7;s:7:"divisas";i:8;s:12:"albaranescli";i:9;s:10:"pedidoscli";i:10;s:15:"presupuestoscli";i:11;s:8:"clientes";i:12;s:9:"contactos";i:13;s:9:"productos";i:14;s:15:"recibospagoscli";i:15;s:13:"pages_options";i:16;s:13:"pages_filters";i:17;s:9:"impuestos";i:18;s:9:"csv_files";i:19;s:8:"api_keys";}
+a:3:{i:0;s:8:"settings";i:1;s:8:"api_keys";i:2;s:9:"productos";}

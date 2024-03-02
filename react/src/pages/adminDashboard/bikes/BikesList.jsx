@@ -1,17 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { useBikes } from "@/hooks/bikes/useBikes";
 import BikeCreate from "./BikeCreate";
 import BikeUpdate from "./BikeUpdate";
 import BikeDelete from "./BikeDelete";
+import useStats from "@/hooks/stats/useStats"
 
 const BikesList = () => {
     const { bikes, setBikes } = useBikes();
+    const { statsBikes, getDashboardBikes } = useStats()
+
+    useState(() => {
+        getDashboardBikes();
+    }, [])
+    
 
     const tarjetas = [
-        { titulo: "Total Revenue", descripcion: "$33,261" },
-        { titulo: "Subscribers", descripcion: "481,095" },
-        { titulo: "Conversations", descripcion: "643,533" },
-        { titulo: "Modal Sale Rate", descripcion: "25%" },
+        { titulo: "Cantidad de Bicis", descripcion: statsBikes.total_bikes },
+        { titulo: "Bicis Libres", descripcion: statsBikes.free_bikes },
+        { titulo: "Bicis Estacionadas", descripcion: statsBikes.occupied_bikes },
+        { titulo: "Bicis con Incidencias", descripcion: statsBikes.maintenance_bikes },
     ];
 
     return(
