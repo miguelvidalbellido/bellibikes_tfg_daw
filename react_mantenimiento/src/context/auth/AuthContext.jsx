@@ -21,6 +21,7 @@ export function AuthContextProvider({ children }) {
                         setUser(data.user)
                         setIsAuth(true)
                         setIsAdmin(data.user.type === 'admin')
+                        console.log("auth")
                     }
                 })
                 .catch(({ error }) => {
