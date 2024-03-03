@@ -59,7 +59,10 @@ const Navbar = () => {
         <div className='rounded-lg shadow-md bg-white ring-1 ring-black ring-opacity-5 overflow-hidden'>
           <div className='px-5 pt-4 flex items-center justify-between'>
             <div>
-              <img className='h-8 w-auto' src='path-to-your-logo.svg' alt='' />
+              <a onClick={() => navigate('/')} className='flex items-center py-4 px-2'>
+                {/* <img src='path-to-your-logo.svg' alt='Logo' className='h-8 w-8 mr-2' /> */}
+                <span className='font-semibold text-orange-500 text-lg cursor-pointer'>BelliBikes</span>
+              </a>
             </div>
             <div className='-mr-2'>
               <button type='button' onClick={() => setIsMenuOpen(false)}>
