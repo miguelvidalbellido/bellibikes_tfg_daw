@@ -132,6 +132,30 @@ class userSerializer(serializers.ModelSerializer):
             },
             'token': user.token,
         }
+    
+    def getUserDataSinToken(context):
+        username = context['username']
+
+        try:
+            user = User.objects.get(username=username)
+        except:
+            raise serializers.ValidationError('*User not found.')
+        
+        ## Busca si el usuario tiene un plan activo
+
+        try:
+            plan = Plan.objects.get(uuid_user=user.uuid)
+        except:
+            plan = None
+
+        return {
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'type': user.type
+            },
+        }
 
 class PlanSerializer(serializers.ModelSerializer):
     class Meta:
@@ -179,5 +203,3 @@ class PlanSerializer(serializers.ModelSerializer):
                 'datetime_finish': plan.datetime_finish
             }
         }
-    
-    
