@@ -7,6 +7,12 @@ from core.utils import check_all_fields
 from .serializers import AssociatedScannerSerializer
 from users.models import User
 from core.utils import notifyChangesWebSocket
+from stations.models import Bike
+from core.permissions import IsMaintenance
+from users.models import User
+from incidents.models import Incident
+from incidents.serializers import IncidentSerializer
+from users.serializers import userSerializer
 
 class AssociatedScannerView(viewsets.ModelViewSet):
     
@@ -82,8 +88,73 @@ class ScannerView(viewsets.ModelViewSet):
         
         if scanner is None:
             return Response({"error": "SCANNER NO ASOCIADO"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Comprobamos si el rfid obtenido esta asociado a una bicicleta
+        try:
+            bike = Bike.objects.get(rfid_tag=rfid)
+        except Exception as e:
+            print(f"[ RFID - BIKE - GET ] Ocurrio un error: {e}")
+            return Response({"error": "RFID BIKE - GET"}, status=status.HTTP_404_NOT_FOUND)
         
         # Notificamos por WebSocket
-        notifyChangesWebSocket('group_name', f'RFID_SCAN_{scanner.username}')
+        notifyChangesWebSocket('group_name', f'RFID_SCAN_{scanner.username}_{rfid}')
 
         return Response({"scanner": "true"}, status=status.HTTP_200_OK)
+    
+    def obtainsIncidentData(self, request):
+
+        permissions_classes = [IsMaintenance]
+
+        data = request.data['rfidScan']
+        required_fields = ['rfid']
+
+        check_all_fields(data, required_fields)
+
+        try:
+            bike = Bike.objects.get(rfid_tag=data['rfid'])
+        except Exception as e:
+            print(f"[ OBTAINS - INCIDENT - BIKE ] Ocurrio un error: {e}")
+            return Response({"error": "OBTAINS INCIDENT - BIKE"}, status=status.HTTP_404_NOT_FOUND)
+        
+        try:
+            print(bike.uuid)
+            incidents = Incident.objects.filter(uuid_type=bike.uuid).exclude(status="RESUELTA")
+        except Exception as e:
+            print(f"[ OBTAINS - INCIDENT - GET ] Ocurrio un error: {e}")
+            return Response({"error": "OBTAINS INCIDENT - GET"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = IncidentSerializer(incidents, many=True)
+
+        return Response({"incidents": serializer.data}, status=status.HTTP_200_OK)
+    
+    def obtainsUserIncident(self, request, uuid_incident):
+
+        ## Obten los datos del usuario que ha reportado el incidente
+
+        try:
+            incident = Incident.objects.get(uuid=uuid_incident)
+        except Exception as e:
+            print(f"[ OBTAINS - USER - INCIDENT ] Ocurrio un error: {e}")
+            return Response({"error": "OBTAINS USER INCIDENT - GET"}, status=status.HTTP_404_NOT_FOUND)
+    
+        try:
+            user = User.objects.get(id=incident.uuid_user_id)
+        except Exception as e:
+            print(f"[ OBTAINS - USER - INCIDENT ] Ocurrio un error: {e}")
+            return Response({"error": "OBTAINS USER INCIDENT - GET"}, status=status.HTTP_404_NOT_FOUND)
+        
+        
+        context = {"username": user.username}
+
+        user = userSerializer.getUserDataSinToken(context)
+
+        
+        return Response({"user": user}, status=status.HTTP_200_OK)
+        
+        
+
+        
+
+
+
+        

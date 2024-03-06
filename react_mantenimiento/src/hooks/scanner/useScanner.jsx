@@ -5,9 +5,10 @@ import ScannerContextProvider from "../../context/Scanner/ScannerContext"
 
 export function useScanner() {
     const navigate = useNavigate()
-    const { rfidScan } = useContext(ScannerContextProvider)
+    const { rfidScan, setRfidScan, rfidCode, setRfidCode } = useContext(ScannerContextProvider)
 
     const [asociatedScanner, setAsociatedScanner] = useState(false)
+    const [incidentData, setIncidentData] = useState([])
 
     const checkScanner = useCallback(() => {
         ScannerService.getCheckScanner().then(({ data, status }) => {
@@ -30,6 +31,16 @@ export function useScanner() {
         })
     }, [])
 
-    return { asociatedScanner, checkScanner, asociateScanner, rfidScan }
+    const getIncidentsScan = useCallback((rfid_tag) => {
+        ScannerService.getIncidentsScan(rfid_tag).then(({ data, status }) => {
+            if (status === 200) {
+                setIncidentData(data.incidents)
+            }
+        }).catch(e => {
+            console.error(e)
+        })
+    }, [])
+
+    return { asociatedScanner, checkScanner, asociateScanner, rfidScan, setRfidScan, rfidCode, setRfidCode, getIncidentsScan, incidentData, setIncidentData }
 
 }
