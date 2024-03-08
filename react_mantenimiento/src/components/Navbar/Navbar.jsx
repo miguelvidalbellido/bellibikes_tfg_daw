@@ -18,9 +18,7 @@ const Navbar = () => {
       <div className='max-w-6xl mx-auto px-4'>
         <div className='flex justify-between'>
           <div>
-            {/* Website Logo */}
             <a onClick={() => navigate('/')} className='flex items-center py-4 px-2'>
-              {/* <img src='path-to-your-logo.svg' alt='Logo' className='h-8 w-8 mr-2' /> */}
               <span className='font-semibold text-orange-500 text-lg cursor-pointer'>BelliBikes</span>
             </a>
           </div>
@@ -39,14 +37,12 @@ const Navbar = () => {
             Escaner
             </a>
         </div>
-          {/* Secondary Navbar items */}
           <div className='hidden md:flex items-center space-x-3'>
           <img src='https://picsum.photos/200/300' alt='Perfil de John Doe' className='w-10 h-10 rounded-full border border-gray-300' />
             <a href='#' className='py-4 px-2 text-gray-500 font-semibold flex items-center'>
                 {user.username}
             </a>
             </div>
-          {/* Mobile menu button */}
           <div className='md:hidden flex items-center'>
             <button type='button' onClick={() => setIsMenuOpen(!isMenuOpen)}>
               <img src={isMenuOpen ? CloseSVG : MenuSVG} alt={isMenuOpen ? 'Cerrar' : 'Menú'} className="h-6 w-6" />
@@ -54,13 +50,11 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      {/* Mobile Menu */}
       <div className={`absolute top-0 inset-x-0 mr-4 p-2 transition transform origin-top-right ${isMenuOpen ? 'block' : 'hidden'}`}>
         <div className='rounded-lg shadow-md bg-white ring-1 ring-black ring-opacity-5 overflow-hidden'>
           <div className='px-5 pt-4 flex items-center justify-between'>
             <div>
               <a onClick={() => navigate('/')} className='flex items-center py-4 px-2'>
-                {/* <img src='path-to-your-logo.svg' alt='Logo' className='h-8 w-8 mr-2' /> */}
                 <span className='font-semibold text-orange-500 text-lg cursor-pointer'>BelliBikes</span>
               </a>
             </div>
@@ -71,9 +65,9 @@ const Navbar = () => {
             </div>
           </div>
           <div className='px-2 pt-2 pb-3 space-y-1'>
-            <a  onClick={() => navigate('/')} className='block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50'>Inicio</a>
-            <a  onClick={() => navigate('/incidents')} className='block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50'>Incidencias</a>
-            <a  onClick={() => navigate('/scan')} className='block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50'>Escaner</a>
+            <a onClick={() => { navigate('/'), setIsMenuOpen(false) }} className='block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50'>Inicio</a>
+            <a onClick={() => { navigate('/incidents'), setIsMenuOpen(false) }} className='block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50'>Incidencias</a>
+            <a onClick={() => { navigate('/scan'), setIsMenuOpen(false) }} className='block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50'>Escaner</a>
           </div>
         </div>
       </div>

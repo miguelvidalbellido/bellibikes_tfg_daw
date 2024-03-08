@@ -1,29 +1,68 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const IncidentsTable = ({ dataIncidents, onIncidentClick }) => {
-  //// PAGINACION ////
+  // Estados para los filtros
+  const [filteredIncidents, setFilteredIncidents] = useState(dataIncidents);
+  const [filterType, setFilterType] = useState("")
+  const [filterStatus, setFilterStatus] = useState("")
+  const [sortOrder, setSortOrder] = useState("asc")
+
+  const tipos = [
+    { value: "", label: "Todos los tipos" },
+    { value: "station", label: "Estación" },
+    { value: "slot", label: "Ranura" },
+    { value: "bike", label: "Bicicleta" },
+  ]
+
+  const statusIncident = [
+        { value: '', label: 'Todos los estados' },
+        { value: 'NUEVA', label: 'NUEVA'},
+        { value: 'ASIGNADA', label: 'ASIGNADA' },
+        { value: 'EN PROCESO', label: 'EN PROCESO' },
+        { value: 'EN ESPERA DE PIEZAS', label: 'EN ESPERA DE PIEZAS' },
+        { value: 'FINALIZADA', label: 'FINALIZADA' }
+    ]
+
+  // PAGINACION
   const [currentPage, setCurrentPage] = useState(0);
   const incidentsPerPage = 8;
-  const pageCount = Math.ceil(dataIncidents.length / incidentsPerPage);
+  const pageCount = Math.ceil(filteredIncidents.length / incidentsPerPage)
 
-  const currentIncidents = dataIncidents.slice(
+  useEffect(() => {
+    let incidents = dataIncidents
+
+    if (filterType) {
+      incidents = incidents.filter((incident) => incident.incident_type === filterType)
+    }
+
+    if (filterStatus) {
+      incidents = incidents.filter((incident) => incident.status === filterStatus)
+    }
+
+    if (sortOrder === "asc") {
+      incidents.sort((a, b) => new Date(a.date) - new Date(b.date))
+    } else {
+      incidents.sort((a, b) => new Date(b.date) - new Date(a.date))
+    }
+
+    setFilteredIncidents(incidents);
+    setCurrentPage(0)
+  }, [dataIncidents, filterType, filterStatus, sortOrder]);
+
+  const currentIncidents = filteredIncidents.slice(
     currentPage * incidentsPerPage,
     (currentPage + 1) * incidentsPerPage
-  );
+  )
 
   const goToNextPage = () => {
-    setCurrentPage((page) => Math.min(page + 1, pageCount - 1));
-  };
+    setCurrentPage((page) => Math.min(page + 1, pageCount - 1))
+  }
 
   const goToPreviousPage = () => {
-    setCurrentPage((page) => Math.max(page - 1, 0));
-  };
+    setCurrentPage((page) => Math.max(page - 1, 0))
+  }
 
-  const goToPage = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  //// FORMATO DE FECHA ////
+  // FORMATO DE FECHA
   const formatDate = (dateString) => {
     const options = {
       year: "numeric",
@@ -36,8 +75,42 @@ const IncidentsTable = ({ dataIncidents, onIncidentClick }) => {
     return new Intl.DateTimeFormat("es", options).format(new Date(dateString));
   };
 
+  const typeLanguageConvert = (type) => {
+    const value = tipos.filter((type_arr) => type_arr.value === type)
+    if (value.length > 0) return value[0].label
+    if (value.length === 0) return type
+  }
+
   return (
     <div className="overflow-x-auto overflow-y-hidden shadow-md sm:rounded-lg">
+      <div className="p-4 flex gap-4 bg-white shadow rounded-lg justify-around">
+      <select
+        value={filterType}
+        onChange={(e) => setFilterType(e.target.value)}
+        className="p-2 rounded-lg border border-gray-200 text-gray-700 focus:ring-orange-500 focus:border-orange-500"
+        >
+          {tipos.map((tipo, index) => (
+            <option key={index} value={tipo.value}>{tipo.label}</option>
+          ))}
+      </select>
+      <select
+        value={filterStatus}
+        onChange={(e) => setFilterStatus(e.target.value)}
+        className="p-2 rounded-lg border border-gray-200 text-gray-700 focus:ring-orange-500 focus:border-orange-500"
+      >
+          {statusIncident.map((status, index) => (
+            <option key={index} value={status.value}>{status.label}</option>
+          ))}
+      </select>
+      <select
+        value={sortOrder}
+        onChange={(e) => setSortOrder(e.target.value)}
+        className="p-2 rounded-lg border border-gray-200 text-gray-700 focus:ring-orange-500 focus:border-orange-500"
+      >
+        <option value="asc">Fecha Ascendente</option>
+        <option value="desc">Fecha Descendente</option>
+      </select>
+    </div>
       <table className="min-w-full text-sm divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
@@ -62,7 +135,7 @@ const IncidentsTable = ({ dataIncidents, onIncidentClick }) => {
           {currentIncidents.map((incident, index) => (
             <tr key={index} className="hover:bg-gray-50">
               <td className="px-6 py-4 whitespace-nowrap">
-                {incident.incident_type}
+                {typeLanguageConvert(incident.incident_type)}
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 {incident.description}

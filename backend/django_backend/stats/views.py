@@ -13,6 +13,14 @@ from stations.models import Bike
 from stations.serializers import BikeSerializer
 from django.db.models import Count
 from core.permissions import IsAdmin
+from core.permissions import IsMaintenance
+from incidents.models import Incident
+from incidents.serializers import IncidentSerializer
+
+from django.db.models.functions import TruncDay
+from django.db.models import Count
+from datetime import timedelta, datetime
+from django.utils.timezone import make_aware
 
 # Create your views here.
 class StatsView(viewsets.GenericViewSet):
@@ -109,3 +117,24 @@ class StatsView(viewsets.GenericViewSet):
             "occupied_bikes": occupied_bikes,
             "maintenance_bikes": maintenance_bikes
         }, status=status.HTTP_200_OK)
+    
+    def statsMaintenancePanel(self, request):
+         
+        permission_classes = [IsMaintenance]
+
+        stats_last_week = Incident.objects.filter(date__gte='2021-10-01').extra({'date': "date(date)"}).values('date').annotate(count=Count('uuid'))
+        # stats_last_week = Incident.objects.extra({'date': "date(date)"}).values('date').annotate(count=Count('uuid')).order_by('-date')[:7]
+
+        for i in range(7):
+            if not any(d['date'] == '2021-10-0'+str(i+1) for d in stats_last_week):
+                stats_last_week = list(stats_last_week)
+                stats_last_week.append({'date': '2021-10-0'+str(i+1), 'count': 0})
+                stats_last_week = tuple(stats_last_week)
+        
+
+        return Response({
+            "stats_last_week": stats_last_week
+        }, status=status.HTTP_200_OK)
+
+
+        
