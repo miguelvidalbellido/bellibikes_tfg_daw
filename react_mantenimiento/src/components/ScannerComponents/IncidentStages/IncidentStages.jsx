@@ -18,7 +18,7 @@ const IncidentStages = ({ stages }) => {
                         <div className="text-sm text-gray-800">Fecha: {new Date(stage.date).toLocaleString()}</div>
                         <div className="text-sm text-gray-800">Estado: {stage.status}</div>
                         <div className="text-sm text-gray-800">Comentario: {stage.comment}</div>
-                        <div className="text-sm text-gray-800">Confirmación de usuario: {stage.user_confirmation ? 'Sí' : 'No'}</div>
+                        {/* <div className="text-sm text-gray-800">Confirmación de usuario: {stage.user_confirmation ? 'Sí' : 'No'}</div> */}
                     </div>
                 ))}
             </div>
