@@ -43,11 +43,11 @@ const PricingPage = () => {
         <div className="">
           <div className="text-center font-semibold">
             <h1 className="text-5xl">
-              <span className="text-green-700 tracking-wide">Flexible </span>
-              <span>Plans</span>
+              <span className="text-green-700 tracking-wide">Planes </span>
+              <span>Flexibles</span>
             </h1>
             <p className="pt-6 text-xl text-gray-400 font-normal w-full px-8 md:w-full">
-              Choose a plan that works best for you and<br/> your team.
+            Elige el plan que mejor se adapte <br/> a tus necesidades.
             </p>
             <button 
               onClick={() => handleTypeProducts('ANUAL')}

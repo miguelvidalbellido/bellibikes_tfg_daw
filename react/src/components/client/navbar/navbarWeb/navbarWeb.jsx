@@ -40,7 +40,7 @@ const NavbarWeb = () => {
   const checkAuth = isAuth ? (
     <>
       <a
-        className="ml-4 bg-green-400 px-4 py-2 rounded-md cursor-pointer hover:bg-red-600 hover:text-white"
+        className="ml-4 bg-green-400 px-4 py-2 rounded-md cursor-pointer hover:bg-red-600 text-white"
         onClick={useLogout}
       >
         Cerrar Sessión
@@ -57,10 +57,10 @@ const NavbarWeb = () => {
 
   const checkAdmin = isAdmin ? (
     <a
-      className="ml-4 bg-green-500 px-4 py-2 rounded-md cursor-pointer hover:bg-green-600"
+      className="ml-4 bg-green-500 px-4 py-2 rounded-md cursor-pointer hover:bg-green-600 text-white"
       onClick={redirects.dashboard}
     >
-      Dashboard
+      Panel de Administración
     </a>
   ) : null;
 
