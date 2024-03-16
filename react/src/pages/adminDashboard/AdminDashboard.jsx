@@ -5,7 +5,7 @@ import SlotsList from './slots/SlotList'
 import GraphicView from './graphicView/GraphicView'
 import Incidents from './incidents/Indicents'
 import HomeDashboard from './home/HomeDashboard'
-
+import ControlUsers from './controlUsers/controlUsers'
 const AdminDashboard = () => {
   const [menuActivo, setMenuActivo] = useState("Inicio");
 
@@ -23,12 +23,15 @@ const AdminDashboard = () => {
         return <GraphicView />;
       case "Incidencias":
         return <Incidents />;
+      case "Usuarios":
+        return <ControlUsers />;
       default:
         return <div>Inicio</div>;
     }
   };
 
-  const menuOptions = ["Inicio", "Estaciones", "Ranuras", "Bicis", "Vista Gráfica", "Incidencias"]
+  // const menuOptions = ["Inicio", "Estaciones", "Ranuras", "Bicis", "Vista Gráfica", "Incidencias"]
+  const menuOptions = ["Inicio", "Estaciones", "Ranuras", "Bicis", "Vista Gráfica", "Usuarios"]
 
   return (
     <div className="flex h-screen">
