@@ -24,6 +24,11 @@ const Page = () => {
     }
   }
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+    return new Date(dateString).toLocaleDateString('es-ES', options) + ' hs';
+  };
+
   return (
     <div className="p-4 bg-gray-100 min-h-screen">
         <button 
@@ -55,12 +60,12 @@ const Page = () => {
                         Comentario: {incidencia.comment}
                       </p>
                       <p className="text-gray-500 text-sm">
-                        Fecha: {incidencia.date}
+                      {formatDate(incidencia.date)}
                       </p>
                     </div>
                     <button
                       onClick={() => marcarComoLeidas(incidencia.uuid)}
-                      className="ml-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                      className="ml-4 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
