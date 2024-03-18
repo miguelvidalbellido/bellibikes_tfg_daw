@@ -20,6 +20,18 @@ const AuthService = {
     Profile() {
         return api().get(AuthEndpoints.GETPROFILE);
     },
+
+    EditUser(data) {
+        return api().post(AuthEndpoints.EDITUSER, { 'user': data });
+    },
+
+    getAllUsers() {
+        return api().get(AuthEndpoints.GETUSERS);
+    },
+
+    NotifyUserMail(data) {
+        return api().post(AuthEndpoints.NOTIFYUSERMAIL, { 'mailData': data });
+    }
 }
 
 export default AuthService;

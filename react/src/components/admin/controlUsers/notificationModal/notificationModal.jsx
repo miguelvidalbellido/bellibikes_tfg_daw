@@ -2,14 +2,29 @@ import React, { useState } from 'react';
 
 const NotificationModal = ({ isOpen, onClose, onSend }) => {
   const [notification, setNotification] = useState({
-    messageType: '',
+    from: 'admin@bellidel.eu',
+    to: '',
+    emailType: '',
     subject: '',
-    message: ''
+    emailData: {
+      message: ''
+    }
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setNotification(prev => ({ ...prev, [name]: value }));
+    // setNotification(prev => ({ ...prev, [name]: value }));
+    if (name === 'message') {
+      setNotification(prev => ({
+        ...prev,
+        emailData: {
+          ...prev.emailData,
+          message: value
+        }
+      }));
+    } else {
+      setNotification(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = (e) => {
@@ -25,13 +40,13 @@ const NotificationModal = ({ isOpen, onClose, onSend }) => {
       <div className="bg-white p-6 rounded shadow-md w-full max-w-md">
         <h3 className="text-lg font-semibold mb-4">Enviar Notificación</h3>
         <form onSubmit={handleSubmit}>
-          <label htmlFor="messageType" className="block mb-2 text-sm font-medium text-gray-700">
+          <label htmlFor="emailType" className="block mb-2 text-sm font-medium text-gray-700">
             Tipo de Mensaje
           </label>
           <select
-            name="messageType"
-            id="messageType"
-            value={notification.messageType}
+            name="emailType"
+            id="emailType"
+            value={notification.emailType}
             onChange={handleChange}
             className="mb-4 w-full p-2 border border-gray-300 rounded-md shadow-sm"
             required

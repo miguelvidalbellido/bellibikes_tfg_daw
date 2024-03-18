@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alerta de Alquiler de Bicicletas</title>
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+    .container {
+        max-width: 600px;
+        margin: auto;
+        background-color: #ffffff;
+        padding: 20px;
+    }
+    .header {
+        background-color: #d32f2f;
+        color: #ffffff;
+        padding: 10px;
+        text-align: center;
+    }
+    .content {
+        padding: 20px;
+        color: #333333;
+        line-height: 1.6;
+    }
+    .alert-text {
+        color: #d32f2f;
+        font-weight: bold;
+    }
+    .footer {
+        background-color: #333333;
+        color: #ffffff;
+        text-align: center;
+        padding: 10px;
+        font-size: 12px;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Alerta Crítica: Acción Inmediata Requerida</h1>
+    </div>
+    <div class="content">
+        <p class="alert-text">Alerta:</p>
+        <p>{{message}}</p>
+    </div>
+    <div class="footer">
+        <p>Es crucial actuar de inmediato para garantizar tu seguridad y la de los demás.</p>
+        <p>Un cordial saludo de parte del equipo de BelliBikes.</p>
+    </div>
+</div>
+</body>
+</html>

@@ -454,7 +454,7 @@ class RentView(viewsets.GenericViewSet):
 
         ## Enviar correo al usuario por post
         try:
-            url = 'http://bellidel.eu:3010/api/send_mail'
+            url = 'https://bbresend.bellidel.eu/api/send_mail'
             headers = {
                 'Content-Type': 'application/json',
             }
