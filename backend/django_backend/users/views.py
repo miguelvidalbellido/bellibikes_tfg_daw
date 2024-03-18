@@ -9,6 +9,7 @@ from rest_framework.permissions import (AllowAny, IsAuthenticated)
 from core.utils import check_all_fields
 from .models import User
 from .models import Plan
+from .models import AccountsDisabled
 import os
 import requests
 from urllib.parse import urlencode
@@ -87,6 +88,19 @@ class UserView(viewsets.GenericViewSet):
         required_fields = ['username', 'password']
 
         check_all_fields(data, required_fields)
+
+        # Comprueba que el usuario no esta en la lista de cuentas deshabilitadas
+        try:
+            user = User.objects.get(username=data['username'])
+        except User.DoesNotExist:
+            raise NotFound('User not found')
+        
+        try:
+            account = AccountsDisabled.objects.get(uuid_user=user)
+            if account.active:
+                raise NotFound('Account disabled')
+        except AccountsDisabled.DoesNotExist:
+            account = None
         
         serializer_context = {
             'username': data['username'],
@@ -249,6 +263,43 @@ class UserAuthenticatedView(viewsets.GenericViewSet):
 class UserAdminView(viewsets.GenericViewSet):
     
     permission_classes = [IsAdmin]
+
+    def disableAccount(self, request):
+        data = request.data['user']
+        
+        try:
+            user = User.objects.get(username=data['username'])
+        except User.DoesNotExist:
+            return Response('User not found', status=status.HTTP_404_NOT_FOUND)
+    
+        try:
+            account = AccountsDisabled.objects.get(uuid_user=user)
+
+            return Response('User already disabled', status=status.HTTP_400_BAD_REQUEST)
+        except AccountsDisabled.DoesNotExist:
+
+            new_account_disabled = AccountsDisabled(
+                uuid_user=user,
+                active=True  
+            )
+            new_account_disabled.save()
+            return Response('Account disabled', status=status.HTTP_200_OK)
+
+
+    def enableAccount(self, request):
+        data = request.data['user']
+        
+        try:
+            user = User.objects.get(username=data['username'])
+        except User.DoesNotExist:
+            return Response('User not found', status=status.HTTP_404_NOT_FOUND)
+    
+        try:
+            account = AccountsDisabled.objects.get(uuid_user=user)
+            account.delete()
+            return Response('User enabled', status=status.HTTP_200_OK)
+        except AccountsDisabled.DoesNotExist:
+            return Response('User already enabled', status=status.HTTP_400_BAD_REQUEST)
 
     def getUsersData(self, request):
         users = User.objects.all()

@@ -13,4 +13,6 @@ urlpatterns = [
     path('getAllUsers', UserAdminView.as_view({'get': 'getUsersData'})),
     path('editUser', UserAdminView.as_view({'post': 'editUser'})),
     path('notifyUserViaEmail', UserAdminView.as_view({'post': 'notifyUserViaEmail'})),
+    path('disableUser', UserAdminView.as_view({'post': 'disableAccount'})),
+    path('enableUser', UserAdminView.as_view({'post': 'enableAccount'})),
 ]
