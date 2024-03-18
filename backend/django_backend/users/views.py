@@ -14,7 +14,8 @@ import requests
 from urllib.parse import urlencode
 from django.utils import timezone
 from django.core import serializers
-# Create your views here.
+from core.permissions import IsAdmin
+import json
 
 class UserView(viewsets.GenericViewSet):
     #permissions_classes = [AllowAny]
@@ -244,3 +245,76 @@ class UserAuthenticatedView(viewsets.GenericViewSet):
 
         # Creamos el Plan en django
         return Response(serializer, status=status.HTTP_201_CREATED)
+
+class UserAdminView(viewsets.GenericViewSet):
+    
+    permission_classes = [IsAdmin]
+
+    def getUsersData(self, request):
+        users = User.objects.all()
+        serializer = userSerializer.getUsersData(users)
+        return Response(serializer, status=status.HTTP_200_OK)
+    
+    ## Función para editar un usuario
+    def editUser(self, request):
+        data = request.data['user']
+        
+        user = User.objects.get(username=data['username'])
+        print(data['type'])
+        if 'username' in data:
+            user.username = data['username']
+        if 'email' in data:
+            user.email = data['email']
+        if 'password' in data:
+            user.set_password(data['password'])
+        if 'type' in data:
+            user.type = data['type']
+        
+        user.save()
+        
+        
+        context = {
+            'user': {
+                'username': user.username,
+                'email': user.email,
+                'type': user.type,
+                'id': user.id
+            }
+        }
+        serializer = userSerializer.editUser(context)
+        return Response(serializer, status=status.HTTP_200_OK)
+    
+    def notifyUserViaEmail(self, request):
+        
+        permission_classes = [IsAdmin]
+
+        data = request.data['mailData']
+        
+
+        try:
+            url = 'https://bbresend.bellidel.eu/api/send_mail'
+            headers = {
+                'Content-Type': 'application/json',
+            }
+
+            emailData = {
+                "token": "asdadasdvs6eO1JYwXPvjIfu=cA9uKCJViUDwIzJmLffQWb!i-=DwBcywenAt?VR2CgRamVeIH=y5OJFO9E-I06!3?WFFj9S9AFQvX02gXsfOTI6jawIxcNVW!LqjDi5RfkJ8CRiYmR--??F3=1ZLzYeNPGHs/YArqJ-dInIrE4fv13o?bD0CYx54PK=?zn0C0-a?=wV9fUdmzJ2j8A/IOfjQj?aA44rBCp2H=GDkhKpnSUgqnUW51ITj19Wgb6f",
+                "from": "admin@bellidel.eu",
+                "to": data['to'], 
+                "subject": data['subject'],
+                "emailType": data['emailType'], 
+                "emailData" : {
+                    "message": data['emailData']['message']
+                }
+            }
+
+            data_json = json.dumps(emailData)
+            response = requests.post(url, headers=headers, data=data_json)
+
+            print(response.json())
+        except Exception as e:
+            print(f"[NOTIFY - SEND MAIL ] Ocurrio un error: {e}")
+            return Response({"error": "NOTIFY - SEND MAIL"}, status=status.HTTP_404_NOT_FOUND)
+
+        return Response('Email sent', status=status.HTTP_200_OK)
+

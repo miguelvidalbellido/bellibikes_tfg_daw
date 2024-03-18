@@ -30,7 +30,7 @@ export const sendEmail = asyncHandler(
     const { data, error } = await resend.emails.send({
       from: from,
       to: [to],
-      subject: subject,
+      subject: subject + ' - BelliBikes',
       html: html,
     });
 

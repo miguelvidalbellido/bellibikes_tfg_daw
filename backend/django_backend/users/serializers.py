@@ -156,6 +156,48 @@ class userSerializer(serializers.ModelSerializer):
                 'type': user.type
             },
         }
+    
+    def getUsersData(context):
+        users = User.objects.all()
+        users_list = []
+        for user in users:
+            users_list.append({
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'type': user.type
+            })
+        return {
+            'users': users_list
+        }
+    
+    def editUser(context):
+        user = context['user']
+        username = user['username']
+        email = user['email']
+        user_type = user['type']
+        user_id = user['id']
+        
+        try:
+            user = User.objects.get(id=user_id)
+        except:
+            raise serializers.ValidationError('User not found.')
+        
+        
+        
+        user.username = username
+        user.email = email
+        user.type = user_type
+        
+        return {
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'type': user.type
+            }
+        }
+
 
 class PlanSerializer(serializers.ModelSerializer):
     class Meta:

@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ModalChangeData from '@/components/admin/controlUsers/modalChangeData/modalChangeData';
 import DisableAccount from '@/components/admin/controlUsers/disableAccount/disableAccount';
 import NotificationModal from '@/components/admin/controlUsers/notificationModal/notificationModal';
-
-const users = [
-  { id: 1, username: 'user1', email: 'user1@example.com', userType: 'Admin', isActive: true },
-  { id: 2, username: 'user2', email: 'user2@example.com', userType: 'User', isActive: false },
-];
+import { useAuth } from '@/hooks/auth/useAuth';
 
 const ControlUsers = () => {
+  
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDisableModalOpen, setIsDisableModalOpen] = useState(false);
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null)
+  const { userAllAdmin, useGetAllUsers, useEditUser, useNotifyUserMail } = useAuth();
+
+  useEffect(() => {
+    useGetAllUsers()
+  }, []);
 
   const handleEditUser = (user) => {
     setCurrentUser(user);
@@ -24,8 +26,8 @@ const ControlUsers = () => {
     setIsDisableModalOpen(true);
   };
 
-  const handleOpenNotificationModal = (user) => {
-    setCurrentUser(users.find(u => u.id === user));
+  const handleOpenNotificationModal = (userId) => {
+    setCurrentUser(userAllAdmin.find(u => u.id === userId));
     setIsNotificationModalOpen(true);
   };
 
@@ -42,17 +44,31 @@ const ControlUsers = () => {
   };
 
   const handleUpdateUser = (userId, updatedFields) => {
-    console.log('Actualizar los datos del usuario:', userId, updatedFields);
+    const username = userAllAdmin.find(u => u.id === userId).username;
+
+    console.log(updatedFields);
+    const data = {
+      'username': username,
+      'email': updatedFields.email,
+      'password': updatedFields.password,
+      'type': updatedFields.userType
+    }
+
+    useEditUser(data);
+    
     setIsEditModalOpen(false);
   };
 
-  const handleConfirmDisable = (userId) => {
-    console.log('Desactivar la cuenta del usuario con id:', userId);
+  const handleConfirmDisable = (username) => {
+    console.log('Desactivar la cuenta del usuario con id:', username);
     setIsDisableModalOpen(false);
   };
 
   const handleNotificationSend = (notificationData) => {
-    console.log('Enviar notificación con los datos:', notificationData, 'al usuario:', currentUser.username);
+    console.log(notificationData);
+    // Añade al campo to el email del usuario seleccionado
+    notificationData.to = currentUser.email;
+    useNotifyUserMail(notificationData);
     setIsNotificationModalOpen(false);
   };
 
@@ -71,7 +87,7 @@ const ControlUsers = () => {
         <DisableAccount
           isOpen={isDisableModalOpen}
           onClose={handleCloseDisableModal}
-          onConfirm={() => handleConfirmDisable(currentUser.id)}
+          onConfirm={() => handleConfirmDisable(currentUser.username)}
           username={currentUser.username}
         />
       )}
@@ -96,14 +112,14 @@ const ControlUsers = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map(user => (
+            {userAllAdmin.map(user => (
               <tr key={user.id} className="border-b border-gray-200 hover:bg-gray-50">
                 <td className="p-4">
                   <span className={`inline-block w-3 h-3 rounded-full ${user.isActive ? 'bg-green-500' : 'bg-orange-500'}`}></span>
                 </td>
                 <td className="p-4">{user.username}</td>
                 <td className="p-4">{user.email}</td>
-                <td className="p-4">{user.userType}</td>
+                <td className="p-4">{user.type}</td>
                 <td className="p-4">
                   {user.isActive ? 'Activo' : 'Desactivado'}
                 </td>
