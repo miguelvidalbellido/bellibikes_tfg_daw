@@ -31,6 +31,14 @@ const AuthService = {
 
     NotifyUserMail(data) {
         return api().post(AuthEndpoints.NOTIFYUSERMAIL, { 'mailData': data });
+    },
+
+    DisableAccount(data) {
+        return api().post(AuthEndpoints.DISABLEACCOUNT, { 'user': data });
+    },
+
+    EnableAccount(data) {
+        return api().post(AuthEndpoints.ENABLEACCOUNT, { 'user': data });
     }
 }
 

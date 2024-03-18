@@ -136,21 +136,9 @@ export function useAuth() {
     //         });
     // }, []);
 
-    const useGetAllUsers = useCallback(() => {
-        AuthService.getAllUsers()
-            .then(({ data, status }) => {
-                if (status === 200) {
-                    setUserAllAdmin(data.users);
-                }
-            })
-            .catch((e) => {
-                console.error(e);
-                setErrorMSG(e.response.data[0]);
-            });
-    }, []);
+    
     
     const useEditUser = useCallback((data) => {
-        console.log(data);
         AuthService.EditUser(data)
             .then(({ data, status }) => {
                 if (status === 200) {
@@ -159,7 +147,8 @@ export function useAuth() {
                         description: `Se han actualizado los datos de: ${data.user.username}`,
                         status: 'success',
                         duration: 5000
-                    })
+                    });
+                    useGetAllUsers();
                 }
             })
             .catch((e) => {
@@ -176,7 +165,6 @@ export function useAuth() {
 
 
     const useNotifyUserMail = useCallback((data) => {
-        console.log(data);
         AuthService.NotifyUserMail(data)
             .then(({ data, status }) => {
                 if (status === 200) {
@@ -199,7 +187,70 @@ export function useAuth() {
                 })
             });
     }, []);
+
+    const useDisableAccount = useCallback((data) => {
+        AuthService.DisableAccount(data)
+            .then(({ data, status }) => {
+                if (status === 200) {
+                    toast({
+                        title: 'Cuenta desactivada',
+                        description: `Se ha desactivado la cuenta`,
+                        status: 'success',
+                        duration: 5000
+                    });
+                    useGetAllUsers();
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+                setErrorMSG(e.response.data[0]);
+                toast({
+                    title: 'Ha ocurrido un error',
+                    description: 'Error al desactivar la cuenta',
+                    status: 'error',
+                    duration: 5000
+                })
+            });
+    }, []);
+
+    const useEnableAccount = useCallback((data) => {
+        AuthService.EnableAccount(data)
+            .then(({ data, status }) => {
+                if (status === 200) {
+                    toast({
+                        title: 'Cuenta activada',
+                        description: `Se ha activado la cuenta`,
+                        status: 'success',
+                        duration: 5000
+                    })
+                    useGetAllUsers();
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+                setErrorMSG(e.response.data[0]);
+                toast({
+                    title: 'Ha ocurrido un error',
+                    description: 'Error al activar la cuenta',
+                    status: 'error',
+                    duration: 5000
+                })
+            });
+    }, []);
+
+    const useGetAllUsers = useCallback(() => {
+        AuthService.getAllUsers()
+            .then(({ data, status }) => {
+                if (status === 200) {
+                    setUserAllAdmin(data.users);
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+                setErrorMSG(e.response.data[0]);
+            });
+    }, []);
     
 
-    return {  useLogout, useEditUser, userAllAdmin, useGetAllUsers, useNotifyUserMail,  isCorrect, user, setUser, allUsers, isAuth, setAllUsers, useLogin, useRegister, profileData, setProfileData, profileRents, setProfileRents, errorMSG, setErrorMSG, userScooter, setUserScooter, error_scooterMSG, setError_scooterMSG, stats, setStats, useProfile }
+    return {  useLogout, useEditUser, userAllAdmin, useDisableAccount, useGetAllUsers, useNotifyUserMail, useEnableAccount, isCorrect, user, setUser, allUsers, isAuth, setAllUsers, useLogin, useRegister, profileData, setProfileData, profileRents, setProfileRents, errorMSG, setErrorMSG, userScooter, setUserScooter, error_scooterMSG, setError_scooterMSG, stats, setStats, useProfile }
 }
