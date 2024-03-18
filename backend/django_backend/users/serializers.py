@@ -3,7 +3,7 @@ from .models import User
 from .models import Plan
 from rest_framework import status
 from rest_framework.exceptions import NotFound
-
+from .models import AccountsDisabled
 
 class userSerializer(serializers.ModelSerializer):
     class Meta:
@@ -160,13 +160,24 @@ class userSerializer(serializers.ModelSerializer):
     def getUsersData(context):
         users = User.objects.all()
         users_list = []
+
         for user in users:
+            is_disabled = True 
+
+            try:
+                account_disabled = AccountsDisabled.objects.get(uuid_user=user)
+                is_disabled = account_disabled.active
+            except AccountsDisabled.DoesNotExist:
+                is_disabled = False
+
             users_list.append({
                 'id': user.id,
                 'username': user.username,
                 'email': user.email,
-                'type': user.type
+                'type': user.type,
+                'is_disabled': is_disabled
             })
+
         return {
             'users': users_list
         }
@@ -245,3 +256,17 @@ class PlanSerializer(serializers.ModelSerializer):
                 'datetime_finish': plan.datetime_finish
             }
         }
+
+class AccountsDisabledSerializer(serializers.ModelSerializer):
+    is_disabled = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'is_disabled'] 
+
+    def get_is_disabled(self, user):
+        try:
+            account_disabled = AccountsDisabled.objects.get(uuid_user=user)
+            return not account_disabled.active
+        except AccountsDisabled.DoesNotExist:
+            return False

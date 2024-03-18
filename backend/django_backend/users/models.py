@@ -49,3 +49,8 @@ class Plan(models.Model):
     available_time = models.IntegerField('available_time')
     datetime_start = models.DateField(null=False)
     datetime_finish = models.DateField(null=False)
+
+class AccountsDisabled(models.Model):
+    uuid = models.CharField('uuid', max_length=36, unique=True, editable=False, null=False)
+    uuid_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    active = models.BooleanField('active', default=True)
