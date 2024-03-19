@@ -168,6 +168,23 @@ services:
     networks:
       - bellibikes_net
       - webproxy
+  
+  bitwarden:
+    image: bitwardenrs/server:latest
+    restart: always
+    expose:
+      - "80"
+    volumes:
+      - ${DATA_PATH}:/data
+    environment:
+      WEBSOCKET_ENABLED: ${WEBSOCKET_ENABLED}
+      SIGNUPS_ALLOWED: ${SIGNUPS_ALLOWED}
+      DOMAIN: ${DOMAIN}
+      VIRTUAL_HOST: bbwiki.bellidel.eu
+      LETSENCRYPT_HOST: bbwiki.bellidel.eu
+      LETSENCRYPT_EMAIL: admin@bellidel.com
+    networks:
+      - webproxy
 
 
 volumes:
