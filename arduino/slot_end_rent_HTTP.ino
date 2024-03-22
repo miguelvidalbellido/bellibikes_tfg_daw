@@ -8,8 +8,8 @@ constexpr uint8_t SS_PIN = 10;
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 
 // Configuración WiFi
-const char* ssid = "asd";
-const char* password = "asd";
+const char* ssid = "AÑADIR_SSID";
+const char* password = "AÑADIR_PASSWORD";
 
 void setup() {
   Serial.begin(9600);
