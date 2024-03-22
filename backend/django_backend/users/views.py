@@ -45,10 +45,10 @@ class UserView(viewsets.GenericViewSet):
         url = os.environ.get('URL_FS')+ '/clientes'
         test1 = os.environ.get('PG_USER')
         test2 = os.environ.get('PG_PASSWORD')
-        print(url)
-        print(token)
-        print(test1)
-        print(test2)
+        # print(url)
+        # print(token)
+        # print(test1)
+        # print(test2)
         headers = {
             'Content-Type': 'application/x-www-form-urlencoded',
             'token': token,
@@ -89,7 +89,6 @@ class UserView(viewsets.GenericViewSet):
 
         check_all_fields(data, required_fields)
 
-        # Comprueba que el usuario no esta en la lista de cuentas deshabilitadas
         try:
             user = User.objects.get(username=data['username'])
         except User.DoesNotExist:
@@ -120,6 +119,18 @@ class UserView(viewsets.GenericViewSet):
         required_fields = ['username', 'password']
 
         check_all_fields(data, required_fields)
+
+        try:
+            user = User.objects.get(username=data['username'])
+        except User.DoesNotExist:
+            raise NotFound('User not found')
+        
+        try:
+            account = AccountsDisabled.objects.get(uuid_user=user)
+            if account.active:
+                raise NotFound('Account disabled')
+        except AccountsDisabled.DoesNotExist:
+            account = None
         
         serializer_context = {
             'username': data['username'],
