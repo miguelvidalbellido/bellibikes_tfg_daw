@@ -30,7 +30,7 @@
 .home_data_initial span:first-child {
   font-size: 1.5rem;
   font-weight: 600;
-  color: rgb(24, 97, 192);
+  /* color: rgb(24, 97, 192); */
 }
 
 .home_buttons {
@@ -38,7 +38,7 @@
 }
 
 .home_buttons .home_button:first-child {
-  background: rgb(24, 97, 192);
+  /* background: rgb(24, 97, 192); */
   color: white;
   padding: 5px 10px;
   border-radius: 20px;
@@ -48,7 +48,7 @@
 
 .home_buttons .home_button:last-child {
   background: white;
-  color: rgb(24, 97, 192);
+  /* color: rgb(24, 97, 192); */
   padding: 5px 10px;
   border-radius: 20px;
   margin: 0 10px;

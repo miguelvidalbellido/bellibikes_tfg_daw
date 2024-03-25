@@ -7,6 +7,11 @@ import terminal from '@/assets/atis-assets/elements/terminal.svg'
 import greenDark from '@/assets/atis-assets/elements/green-dark-up.svg'
 import bulletRight from '@/assets/atis-assets/elements/bullets-gray-right.svg'
 import bulletLeft from '@/assets/atis-assets/elements/bullets-gray-left.svg'
+import portadaimg from '@/assets/imgs/portada_reduce.webp'
+import bicis1 from '@/assets/imgs/bicis1.webp'
+import bicis2 from '@/assets/imgs/bicis2.webp'
+import bicis3 from '@/assets/imgs/bicis3.webp'
+
 const HomeDesktop = () => {
   return (
 <>
@@ -49,8 +54,8 @@ const HomeDesktop = () => {
                 <div className='w-full lg:w-1/2 px-4 flex items-center justify-center'>
                   <div className='relative' style={{ zIndex: 0 }}>
                     <img
-                      className='h-128 w-full max-w-lg object-cover rounded-3xl md:rounded-br-none'
-                      src='https://images.unsplash.com/photo-1462826303086-329426d1aef5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1050&q=80'
+                      className='h-96 w-full max-w-lg object-cover rounded-3xl md:rounded-br-none'
+                      src={portadaimg}
                       alt=''
                     />
                     <img
@@ -198,9 +203,9 @@ const HomeDesktop = () => {
                     src={puzzle}
                     alt=''
                   />
-                  <h4 className='mb-1 text-green-600'>Total Revenue</h4>
+                  <h4 className='mb-1 text-green-600'>Ahorro medio</h4>
                   <span className='text-3xl lg:text-4xl font-bold'>
-                    $33,261
+                    2.110 €
                   </span>
                 </div>
               </div>
@@ -211,9 +216,9 @@ const HomeDesktop = () => {
                     src={userCircle}
                     alt=''
                   />
-                  <h4 className='mb-2 text-green-600'>Subscribers</h4>
+                  <h4 className='mb-2 text-green-600'>Usuarios Actuales</h4>
                   <span className='text-3xl lg:text-4xl font-bold'>
-                    481,095
+                    122.102
                   </span>
                 </div>
               </div>
@@ -224,9 +229,9 @@ const HomeDesktop = () => {
                     src={thumb}
                     alt=''
                   />
-                  <h4 className='mb-2 text-green-600'>Conversations</h4>
+                  <h4 className='mb-2 text-green-600'>Alquileres diarios</h4>
                   <span className='text-3xl lg:text-4xl font-bold'>
-                    643,533
+                    35.120
                   </span>
                 </div>
               </div>
@@ -237,8 +242,8 @@ const HomeDesktop = () => {
                     src={terminal}
                     alt=''
                   />
-                  <h4 className='mb-2 text-green-600'>Modal Sale Rate</h4>
-                  <span className='text-3xl lg:text-4xl font-bold'>25%</span>
+                  <h4 className='mb-2 text-green-600'>Reducción de contaminación</h4>
+                  <span className='text-3xl lg:text-4xl font-bold'>23%</span>
                 </div>
               </div>
             </div>
@@ -268,9 +273,9 @@ const HomeDesktop = () => {
               <div className='flex flex-wrap items-center -mx-4'>
                 <div className='mb-12 lg:mb-0 w-full lg:w-1/2 px-4'>
                   <div className='max-w-md'>
-                    <span className='text-green-600 font-bold'>
+                    {/* <span className='text-green-600 font-bold'>
                       Dolor sit amet consectutar
-                    </span>
+                    </span> */}
                     <h2 className='mb-6 text-4xl lg:text-5xl font-bold font-heading'>
                       Un estilo saludable y sostenible
                     </h2>
@@ -297,7 +302,7 @@ const HomeDesktop = () => {
                             Registro sin complicaciones
                           </h3>
                           <p className='text-gray-500 leading-loose'>
-                            Con BikeEase, el proceso de registro es rápido y sin
+                            Con BelliBikes, el proceso de registro es rápido y sin
                             complicaciones.
                           </p>
                         </div>
@@ -362,20 +367,20 @@ const HomeDesktop = () => {
                   <div className='mb-6 w-full lg:w-1/2 px-3'>
                     <img
                       className='mb-6 w-full h-64 object-cover rounded-lg'
-                      src='https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1050&q=80'
-                      alt=''
+                      src={bicis1}
+                      alt='Imagen de gente en atardecer con las bicis'
                     />
                     <img
                       className='w-full h-64 object-cover rounded-lg'
-                      src='https://images.unsplash.com/photo-1469827160215-9d29e96e72f4?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1052&q=80'
-                      alt=''
+                      src={bicis2}
+                      alt='Imagen de gente con las bicis eléctricas'
                     />
                   </div>
                   <div className='w-full lg:w-1/2 px-3'>
                     <img
                       className='w-full h-64 object-cover rounded-lg'
-                      src='https://images.unsplash.com/photo-1605201100110-1f07883d2882?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80'
-                      alt=''
+                      src={bicis3}
+                      alt='Imagen de amigos con las bicis'
                     />
                   </div>
                 </div>
@@ -427,7 +432,7 @@ const HomeDesktop = () => {
                   Te contamos un poco más
                 </span>
                 <h2 className='text-4xl lg:text-5xl font-bold font-heading'>
-                  Conoce nuestro increible equipo
+                  Conoce nuestro increíble equipo
                 </h2>
               </div>
               <div className='flex flex-wrap'>
@@ -568,7 +573,7 @@ const HomeDesktop = () => {
                   Mucho más que una empresa de alquiler de bicis
                 </h2>
                 <p className='mb-6 max-w-md mx-auto text-gray-500 leading-loose'>
-                  Muevete libremente ayudando a crear un mundo más sostenible.
+                  Muévete libremente ayudando a crear un mundo más sostenible.
                 </p>
                 <a
                   className='inline-block py-2 px-6 bg-green-600 hover:bg-green-700 text-white font-bold rounded-l-xl rounded-t-xl'

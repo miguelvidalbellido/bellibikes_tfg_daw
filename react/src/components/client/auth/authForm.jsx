@@ -27,13 +27,13 @@ const AuthForm = ({sendData, errorMSG, type}) => {
       <input type="text" placeholder="Username" {...register('username')}/>
       <input type="password" placeholder="Password" {...register('password')}/>
       <div className="button-container">
-        <button className="login-btn">Login</button>
+        <button className="login-btn bg-green-600 text-white font-bold">Acceder</button>
         {/* <button className="register-btn">Register</button> */}
       </div>
       <div className="mt-4 text-center">
         <p className="text-sm">
           ¿No tienes una cuenta? 
-          <a onClick={() => redirects.register()} className="text-blue-600 hover:text-blue-800">
+          <a onClick={() => redirects.register()} className="text-green-600 hover:text-green-800 font-bold	ml-2">
             Regístrate aquí
           </a>
         </p>
@@ -46,12 +46,12 @@ const AuthForm = ({sendData, errorMSG, type}) => {
       <input type="email" placeholder='Email' {...register('email')}/>
       <div className="button-container">
         {/* <button className="login-btn">Login</button> */}
-        <button className="register-btn">Register</button>
+        <button className="register-btn bg-green-600 text-white font-bold">Regístrate</button>
       </div>
       <div className="mt-4 text-center">
         <p className="text-sm">
           ¿Ya tienes una cuenta? 
-          <a onClick={() => redirects.login()} className="text-blue-600 hover:text-blue-800">
+          <a onClick={() => redirects.login()} className="text-green-600 hover:text-blue-800 font-bold ml-2">
             Accede aquí
           </a>
         </p>

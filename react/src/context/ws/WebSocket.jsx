@@ -16,7 +16,7 @@ export function WebSocketContextProvider({ children }) {
     const { fetchRents } = useContext(RentContextProvider);
 
     useEffect(() => {
-        WebSocketService.connect('wss://bellibikes.bellidel.eu/ws/changes/')
+        WebSocketService.connect('wss://bbdjango.bellidel.eu/ws/changes/')
 
         // Suscribirse a mensajes del WebSocket
         WebSocketService.subscribeToMessages((newMessage) => {

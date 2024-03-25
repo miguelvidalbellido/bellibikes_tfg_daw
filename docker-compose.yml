@@ -74,6 +74,22 @@ services:
       - ./react:/app
     networks:
       - webproxy
+    
+  bellibikes_mantenimiento:
+    image: node:18.18
+    container_name: bellibikes_mantenimiento
+    command: npm run dev
+    working_dir: /app_mantenimiento
+    ports:
+      - "9373:5173"
+    environment:
+      - VIRTUAL_HOST=bellibikesmant.bellidel.eu
+      - LETSENCRYPT_HOST=bellibikesmant.bellidel.eu
+      - LETSENCRYPT_EMAIL=admin@bellidel.com
+    volumes:
+      - ./react_mantenimiento:/app_mantenimiento
+    networks:
+      - webproxy
   
   # FASTIFY FOR FS
 
@@ -151,6 +167,23 @@ services:
       - LETSENCRYPT_EMAIL=admin@bellidel.com
     networks:
       - bellibikes_net
+      - webproxy
+  
+  bitwarden:
+    image: bitwardenrs/server:latest
+    restart: always
+    expose:
+      - "80"
+    volumes:
+      - ${DATA_PATH}:/data
+    environment:
+      WEBSOCKET_ENABLED: ${WEBSOCKET_ENABLED}
+      SIGNUPS_ALLOWED: ${SIGNUPS_ALLOWED}
+      DOMAIN: ${DOMAIN}
+      VIRTUAL_HOST: bbwiki.bellidel.eu
+      LETSENCRYPT_HOST: bbwiki.bellidel.eu
+      LETSENCRYPT_EMAIL: admin@bellidel.com
+    networks:
       - webproxy
 
 

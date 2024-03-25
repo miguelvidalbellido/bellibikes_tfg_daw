@@ -56,22 +56,22 @@ const HomeWelcome = () => {
 
   const view = isAuth ? (
     <>
-        <span>Bienvenido a bikesOnt</span>
+        <span className='text-green-600'>Bienvenido a BelliBikes</span>
         <div className='home_buttons'>
-          <button className='home_button' onClick={() => redirects.profile()}>Profile</button>
+          <button className='home_button bg-green-500' onClick={() => redirects.profile()}>Perfil</button>
           <span>o</span>
-          <button className="home_button" onClick={() => useLogout()}>Logout</button>
+          <button className="home_button text-green-600" onClick={() => useLogout()}>Salir</button>
         </div> 
 
         {viewExpand}
     </>
   ) : ( 
       <>
-        <span>Bienvenido a bikesOnt</span>
+        <span className='text-green-600'>Bienvenido a Bellibikes</span>
         <div className='home_buttons'>
-          <button className='home_button' onClick={() => redirects.register()}>Registrarse</button>
-          <span>o</span>
-          <button className="home_button" onClick={() => redirects.login()}>Acceder</button>
+          <button className='home_button bg-green-500' onClick={() => redirects.register()}>Registrarse</button>
+          <span></span>
+          <button className="home_button text-green-600" onClick={() => redirects.login()}>Acceder</button>
         </div> 
       </>
   )

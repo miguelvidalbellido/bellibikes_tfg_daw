@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     'rent',
     'channels',
     'incidents',
+    'stats',
+    'maintenance',
 ]
 
 MIDDLEWARE = [

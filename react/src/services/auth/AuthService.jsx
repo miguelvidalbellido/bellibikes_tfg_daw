@@ -20,6 +20,26 @@ const AuthService = {
     Profile() {
         return api().get(AuthEndpoints.GETPROFILE);
     },
+
+    EditUser(data) {
+        return api().post(AuthEndpoints.EDITUSER, { 'user': data });
+    },
+
+    getAllUsers() {
+        return api().get(AuthEndpoints.GETUSERS);
+    },
+
+    NotifyUserMail(data) {
+        return api().post(AuthEndpoints.NOTIFYUSERMAIL, { 'mailData': data });
+    },
+
+    DisableAccount(data) {
+        return api().post(AuthEndpoints.DISABLEACCOUNT, { 'user': data });
+    },
+
+    EnableAccount(data) {
+        return api().post(AuthEndpoints.ENABLEACCOUNT, { 'user': data });
+    }
 }
 
 export default AuthService;

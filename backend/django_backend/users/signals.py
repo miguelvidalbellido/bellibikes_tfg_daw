@@ -3,9 +3,11 @@ from django.dispatch import receiver
 from .models import User
 from .models import Plan
 from core.utils import generate_uuid
+from .models import AccountsDisabled
 
 @receiver(pre_save, sender=User)
 @receiver(pre_save, sender=Plan)
+@receiver(pre_save, sender=AccountsDisabled)
 
 def add_uuid_if_not_set(sender, instance, *args, **kwargs):
 

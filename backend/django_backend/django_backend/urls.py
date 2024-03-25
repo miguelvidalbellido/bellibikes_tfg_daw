@@ -24,4 +24,6 @@ urlpatterns = [
     path('', include('blacklist.urls')),
     path('', include('rent.urls')),
     path('', include('incidents.urls')),
+    path('stats/', include('stats.urls')),
+    path('maintenance/', include('maintenance.urls')),
 ]

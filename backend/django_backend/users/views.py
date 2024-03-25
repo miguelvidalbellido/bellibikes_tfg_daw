@@ -9,12 +9,14 @@ from rest_framework.permissions import (AllowAny, IsAuthenticated)
 from core.utils import check_all_fields
 from .models import User
 from .models import Plan
+from .models import AccountsDisabled
 import os
 import requests
 from urllib.parse import urlencode
 from django.utils import timezone
 from django.core import serializers
-# Create your views here.
+from core.permissions import IsAdmin
+import json
 
 class UserView(viewsets.GenericViewSet):
     #permissions_classes = [AllowAny]
@@ -43,10 +45,10 @@ class UserView(viewsets.GenericViewSet):
         url = os.environ.get('URL_FS')+ '/clientes'
         test1 = os.environ.get('PG_USER')
         test2 = os.environ.get('PG_PASSWORD')
-        print(url)
-        print(token)
-        print(test1)
-        print(test2)
+        # print(url)
+        # print(token)
+        # print(test1)
+        # print(test2)
         headers = {
             'Content-Type': 'application/x-www-form-urlencoded',
             'token': token,
@@ -86,6 +88,18 @@ class UserView(viewsets.GenericViewSet):
         required_fields = ['username', 'password']
 
         check_all_fields(data, required_fields)
+
+        try:
+            user = User.objects.get(username=data['username'])
+        except User.DoesNotExist:
+            raise NotFound('User not found')
+        
+        try:
+            account = AccountsDisabled.objects.get(uuid_user=user)
+            if account.active:
+                raise NotFound('Account disabled')
+        except AccountsDisabled.DoesNotExist:
+            account = None
         
         serializer_context = {
             'username': data['username'],
@@ -93,6 +107,38 @@ class UserView(viewsets.GenericViewSet):
         }
 
         serializer = userSerializer.login(serializer_context)
+        return Response(serializer, status=status.HTTP_200_OK)
+    
+    def loginMantenance(self, request):
+
+        if 'user' not in request.data:
+            raise NotFound('User field is required')
+        
+        data = request.data['user']
+
+        required_fields = ['username', 'password']
+
+        check_all_fields(data, required_fields)
+
+        try:
+            user = User.objects.get(username=data['username'])
+        except User.DoesNotExist:
+            raise NotFound('User not found')
+        
+        try:
+            account = AccountsDisabled.objects.get(uuid_user=user)
+            if account.active:
+                raise NotFound('Account disabled')
+        except AccountsDisabled.DoesNotExist:
+            account = None
+        
+        serializer_context = {
+            'username': data['username'],
+            'password': data['password']
+        }
+
+
+        serializer = userSerializer.loginMantenance(serializer_context)
         return Response(serializer, status=status.HTTP_200_OK)
 
 class UserAuthenticatedView(viewsets.GenericViewSet):
@@ -224,3 +270,113 @@ class UserAuthenticatedView(viewsets.GenericViewSet):
 
         # Creamos el Plan en django
         return Response(serializer, status=status.HTTP_201_CREATED)
+
+class UserAdminView(viewsets.GenericViewSet):
+    
+    permission_classes = [IsAdmin]
+
+    def disableAccount(self, request):
+        data = request.data['user']
+        
+        try:
+            user = User.objects.get(username=data['username'])
+        except User.DoesNotExist:
+            return Response('User not found', status=status.HTTP_404_NOT_FOUND)
+    
+        try:
+            account = AccountsDisabled.objects.get(uuid_user=user)
+
+            return Response('User already disabled', status=status.HTTP_400_BAD_REQUEST)
+        except AccountsDisabled.DoesNotExist:
+
+            new_account_disabled = AccountsDisabled(
+                uuid_user=user,
+                active=True  
+            )
+            new_account_disabled.save()
+            return Response('Account disabled', status=status.HTTP_200_OK)
+
+
+    def enableAccount(self, request):
+        data = request.data['user']
+        
+        try:
+            user = User.objects.get(username=data['username'])
+        except User.DoesNotExist:
+            return Response('User not found', status=status.HTTP_404_NOT_FOUND)
+    
+        try:
+            account = AccountsDisabled.objects.get(uuid_user=user)
+            account.delete()
+            return Response('User enabled', status=status.HTTP_200_OK)
+        except AccountsDisabled.DoesNotExist:
+            return Response('User already enabled', status=status.HTTP_400_BAD_REQUEST)
+
+    def getUsersData(self, request):
+        users = User.objects.all()
+        serializer = userSerializer.getUsersData(users)
+        return Response(serializer, status=status.HTTP_200_OK)
+    
+    ## Función para editar un usuario
+    def editUser(self, request):
+        data = request.data['user']
+        
+        user = User.objects.get(username=data['username'])
+        print(data['type'])
+        if 'username' in data:
+            user.username = data['username']
+        if 'email' in data:
+            user.email = data['email']
+        if 'password' in data:
+            user.set_password(data['password'])
+        if 'type' in data:
+            user.type = data['type']
+        
+        user.save()
+        
+        
+        context = {
+            'user': {
+                'username': user.username,
+                'email': user.email,
+                'type': user.type,
+                'id': user.id
+            }
+        }
+        serializer = userSerializer.editUser(context)
+        return Response(serializer, status=status.HTTP_200_OK)
+    
+    def notifyUserViaEmail(self, request):
+        
+        permission_classes = [IsAdmin]
+
+        data = request.data['mailData']
+        
+
+        try:
+            url = 'https://bbresend.bellidel.eu/api/send_mail'
+            headers = {
+                'Content-Type': 'application/json',
+            }
+
+            emailData = {
+                "token": "asdadasdvs6eO1JYwXPvjIfu=cA9uKCJViUDwIzJmLffQWb!i-=DwBcywenAt?VR2CgRamVeIH=y5OJFO9E-I06!3?WFFj9S9AFQvX02gXsfOTI6jawIxcNVW!LqjDi5RfkJ8CRiYmR--??F3=1ZLzYeNPGHs/YArqJ-dInIrE4fv13o?bD0CYx54PK=?zn0C0-a?=wV9fUdmzJ2j8A/IOfjQj?aA44rBCp2H=GDkhKpnSUgqnUW51ITj19Wgb6f",
+                "from": "admin@bellidel.eu",
+                "to": data['to'], 
+                "subject": data['subject'],
+                "emailType": data['emailType'], 
+                "emailData" : {
+                    "message": data['emailData']['message']
+                }
+            }
+
+            data_json = json.dumps(emailData)
+            response = requests.post(url, headers=headers, data=data_json)
+
+            print(response.json())
+        except Exception as e:
+            print(f"[NOTIFY - SEND MAIL ] Ocurrio un error: {e}")
+            return Response({"error": "NOTIFY - SEND MAIL"}, status=status.HTTP_404_NOT_FOUND)
+
+        return Response('Email sent', status=status.HTTP_200_OK)
+

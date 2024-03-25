@@ -3,15 +3,21 @@ import { useSlots } from "@/hooks/slots/useSlots"
 import SlotCreate from "./SlotCreate"
 import SlotUpdate from "./SlotUpdate"
 import SlotDelete from "./SlotDelete"
+import useStats from "@/hooks/stats/useStats"
 
 const SlotsList = () => {
     const { slots, setSlots } = useSlots();
+    const { statsSlots, getDashboardSlots } = useStats();
+
+    useState(() => {
+      getDashboardSlots();
+    }, []);
 
     const tarjetas = [
-      { titulo: "Total Revenue", descripcion: "$33,261" },
-      { titulo: "Subscribers", descripcion: "481,095" },
-      { titulo: "Conversations", descripcion: "643,533" },
-      { titulo: "Modal Sale Rate", descripcion: "25%" },
+      { titulo: "Ranuras Totales", descripcion: statsSlots.total_slots },
+      { titulo: "Ranuras Libres", descripcion: statsSlots.free_slots },
+      { titulo: "Ranuras Ocupadas", descripcion: statsSlots.occupied_slots },
+      { titulo: "Ranuras en Mantenimiento", descripcion: statsSlots.maintenance_slots },
   ];
 
     return(

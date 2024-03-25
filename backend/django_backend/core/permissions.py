@@ -9,3 +9,12 @@ class IsAdmin(permissions.BasePermission):
             return user.type == 'admin'
         except:
             return False
+
+class IsMaintenance(permissions.BasePermission):
+    messagge = 'You must be a maintenance to perform this action.'
+    def has_permission(self, request, view):
+        try:
+            user = User.objects.get(username=request.user)
+            return user.type == 'maint'
+        except:
+            return False

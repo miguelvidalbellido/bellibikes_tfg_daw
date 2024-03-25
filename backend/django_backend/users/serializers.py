@@ -3,7 +3,7 @@ from .models import User
 from .models import Plan
 from rest_framework import status
 from rest_framework.exceptions import NotFound
-
+from .models import AccountsDisabled
 
 class userSerializer(serializers.ModelSerializer):
     class Meta:
@@ -73,6 +73,46 @@ class userSerializer(serializers.ModelSerializer):
             },
             'token': user.token,
         }
+    
+    def loginMantenance(context):
+        username = context['username']
+        password = context['password']
+
+        if username is None:
+            raise NotFound('Username is required to login')
+        
+        if password is None:
+            raise NotFound('Password is required to login')
+        
+        try:
+            user = User.objects.get(username=username)
+            # user.countTokens = 0
+            user.save()
+        except:
+            raise serializers.ValidationError(
+                'Username or password incorrects.'
+            )
+            
+        
+        if not user.check_password(password):
+            raise serializers.ValidationError(
+                'Username or password incorrects.'
+            )
+        
+        if user.type != 'maint':
+            raise serializers.ValidationError(
+                'Username not type maintenance'
+            )
+        
+        
+        return {
+            'user': {
+                'username': user.username,
+                'email': user.email,
+                'type': user.type
+            },
+            'token': user.token,
+        }
         
         
     def getUserData(context):
@@ -92,6 +132,83 @@ class userSerializer(serializers.ModelSerializer):
             },
             'token': user.token,
         }
+    
+    def getUserDataSinToken(context):
+        username = context['username']
+
+        try:
+            user = User.objects.get(username=username)
+        except:
+            raise serializers.ValidationError('*User not found.')
+        
+        ## Busca si el usuario tiene un plan activo
+
+        try:
+            plan = Plan.objects.get(uuid_user=user.uuid)
+        except:
+            plan = None
+
+        return {
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'type': user.type
+            },
+        }
+    
+    def getUsersData(context):
+        users = User.objects.all()
+        users_list = []
+
+        for user in users:
+            is_disabled = True 
+
+            try:
+                account_disabled = AccountsDisabled.objects.get(uuid_user=user)
+                is_disabled = account_disabled.active
+            except AccountsDisabled.DoesNotExist:
+                is_disabled = False
+
+            users_list.append({
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'type': user.type,
+                'is_disabled': is_disabled
+            })
+
+        return {
+            'users': users_list
+        }
+    
+    def editUser(context):
+        user = context['user']
+        username = user['username']
+        email = user['email']
+        user_type = user['type']
+        user_id = user['id']
+        
+        try:
+            user = User.objects.get(id=user_id)
+        except:
+            raise serializers.ValidationError('User not found.')
+        
+        
+        
+        user.username = username
+        user.email = email
+        user.type = user_type
+        
+        return {
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'type': user.type
+            }
+        }
+
 
 class PlanSerializer(serializers.ModelSerializer):
     class Meta:
@@ -139,5 +256,17 @@ class PlanSerializer(serializers.ModelSerializer):
                 'datetime_finish': plan.datetime_finish
             }
         }
-    
-    
+
+class AccountsDisabledSerializer(serializers.ModelSerializer):
+    is_disabled = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'is_disabled'] 
+
+    def get_is_disabled(self, user):
+        try:
+            account_disabled = AccountsDisabled.objects.get(uuid_user=user)
+            return not account_disabled.active
+        except AccountsDisabled.DoesNotExist:
+            return False

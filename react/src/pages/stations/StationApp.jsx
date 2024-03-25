@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import BikesStationCard from "@/components/client/bikes/BikesStationCard"
 import stationIcon from "@/assets/stationIcons/station_icon_app.png"
 import { useStations } from "@/hooks/stations/useStations"
 import { useSlots } from "@/hooks/slots/useSlots"
 import { useBikes } from "@/hooks/bikes/useBikes"
-import { useNavigate } from "react-router-dom";
 import StationAppView from '@/components/client/stations/StationAppView';
 
 
@@ -45,9 +44,17 @@ const StationApp = () => {
 
   const viewData = stationData[0] ? (
     <>
-      <h2 className="text-xl font-bold text-gray-800">
-        {stationData[0].name}{" "}
-      </h2>
+      <div className="flex justify-between items-center">
+        <h2 className="text-xl font-bold text-gray-800 flex-grow">
+          {stationData[0].name}
+        </h2>
+        <button
+          onClick={() => navigate('/')}
+          className="text-red-600 font-semibold hover:text-red-600 text-2xl"
+        >
+          X
+        </button>
+      </div>
       <p className="text-gray-500 mb-4">{stationData[0].description}</p>
 
       <div className="flex justify-between items-start mb-4">

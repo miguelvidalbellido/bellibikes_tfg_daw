@@ -1,6 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'
+import useStats from '@/hooks/stats/useStats'
+
 export default function HomeDashboard() {
-  
+
+  const { statsHome, getDashboardHome } = useStats()
+
+  useEffect(() => {
+    getDashboardHome()
+  }, [])
 
   return (
       <>
@@ -24,12 +31,12 @@ export default function HomeDashboard() {
                         />
                       </svg>
                     </span>
-                    <h3 className='text-sm text-gray-600'>Responses</h3>
-                    <span className='inline-block ml-auto px-2 py-1 text-xs text-gray-500 bg-gray-50 rounded-full'>
+                    <h3 className='text-sm text-gray-600'>Total alquileres</h3>
+                    {/* <span className='inline-block ml-auto px-2 py-1 text-xs text-gray-500 bg-gray-50 rounded-full'>
                       30 Days
-                    </span>
+                    </span> */}
                   </div>
-                  <h2 className='mb-2 text-3xl font-bold'>1 450</h2>
+                  <h2 className='mb-2 text-3xl font-bold'>{statsHome.totalRent}</h2>
                   <span className='text-xs text-red-500'>
                     <span className='inline-block mr-2'>
                       <svg
@@ -45,7 +52,7 @@ export default function HomeDashboard() {
                         />
                       </svg>
                     </span>
-                    <span>25% less</span>
+                    {/* <span>25% less</span> */}
                   </span>
                 </div>
               </div>
@@ -66,12 +73,12 @@ export default function HomeDashboard() {
                         />
                       </svg>
                     </span>
-                    <h3 className='text-sm text-gray-600'>Projects</h3>
-                    <span className='inline-block ml-auto px-2 py-1 text-xs text-gray-500 bg-gray-50 rounded-full'>
+                    <h3 className='text-sm text-gray-600'>Total Slots</h3>
+                    {/* <span className='inline-block ml-auto px-2 py-1 text-xs text-gray-500 bg-gray-50 rounded-full'>
                       30 Days
-                    </span>
+                    </span> */}
                   </div>
-                  <h2 className='mb-2 text-3xl font-bold'>54</h2>
+                  <h2 className='mb-2 text-3xl font-bold'>{statsHome.totalSlots}</h2>
                   <span className='text-xs text-green-500'>
                     <span className='inline-block mr-2'>
                       <svg
@@ -87,7 +94,7 @@ export default function HomeDashboard() {
                         />
                       </svg>
                     </span>
-                    <span>25% more</span>
+                    {/* <span>Incidencias</span> */}
                   </span>
                 </div>
               </div>
@@ -108,12 +115,12 @@ export default function HomeDashboard() {
                         />
                       </svg>
                     </span>
-                    <h3 className='text-sm text-gray-600'>Reports</h3>
-                    <span className='inline-block ml-auto px-2 py-1 text-xs text-gray-500 bg-gray-50 rounded-full'>
+                    <h3 className='text-sm text-gray-600'>Total Usuarios</h3>
+                    {/* <span className='inline-block ml-auto px-2 py-1 text-xs text-gray-500 bg-gray-50 rounded-full'>
                       30 Days
-                    </span>
+                    </span> */}
                   </div>
-                  <h2 className='mb-2 text-3xl font-bold'>492</h2>
+                  <h2 className='mb-2 text-3xl font-bold'>{statsHome.totalUsers}</h2>
                   <span className='text-xs text-green-500'>
                     <span className='inline-block mr-2'>
                       <svg
@@ -129,7 +136,7 @@ export default function HomeDashboard() {
                         />
                       </svg>
                     </span>
-                    <span>12.5% more</span>
+                    {/* <span>12.5% more</span> */}
                   </span>
                 </div>
               </div>
@@ -150,12 +157,12 @@ export default function HomeDashboard() {
                         />
                       </svg>
                     </span>
-                    <h3 className='text-sm text-gray-600'>Users</h3>
-                    <span className='inline-block ml-auto px-2 py-1 text-xs text-gray-500 bg-gray-50 rounded-full'>
+                    <h3 className='text-sm text-gray-600'>Total Estaciones</h3>
+                    {/* <span className='inline-block ml-auto px-2 py-1 text-xs text-gray-500 bg-gray-50 rounded-full'>
                       30 Days
-                    </span>
+                    </span> */}
                   </div>
-                  <h2 className='mb-2 text-3xl font-bold'>235</h2>
+                  <h2 className='mb-2 text-3xl font-bold'>{statsHome.totalStations}</h2>
                   <span className='text-xs text-red-500'>
                     <span className='inline-block mr-2'>
                       <svg
@@ -171,7 +178,7 @@ export default function HomeDashboard() {
                         />
                       </svg>
                     </span>
-                    <span>25% less</span>
+                    {/* <span>25% less</span> */}
                   </span>
                 </div>
               </div>
