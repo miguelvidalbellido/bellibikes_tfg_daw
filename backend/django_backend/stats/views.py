@@ -44,7 +44,7 @@ class StatsView(viewsets.GenericViewSet):
             totalUsers = 0
 
         try:
-            totalStations = Station.objects.filter(status='ACTIVE').count()
+            totalStations = Station.objects.filter(status='OPEN').count()
         except:
             totalStations = 0
         
@@ -65,7 +65,7 @@ class StatsView(viewsets.GenericViewSet):
             stations = 0
 
         try:
-            stationsOpen = Station.objects.filter(status='ACTIVE').count()
+            stationsOpen = Station.objects.filter(status='OPEN').count()
         except:
             stationsOpen = 0
 

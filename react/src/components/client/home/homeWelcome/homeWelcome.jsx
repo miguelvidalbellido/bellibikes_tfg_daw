@@ -35,6 +35,9 @@ const HomeWelcome = () => {
     rentqr: () => {
       navigate('/rentQR')
     },
+    camera: () => {
+      navigate('/camera')
+    },
     profile: () => {
       navigate('/profile')
     }
@@ -61,6 +64,8 @@ const HomeWelcome = () => {
           <button className='home_button bg-green-500' onClick={() => redirects.profile()}>Perfil</button>
           <span>o</span>
           <button className="home_button text-green-600" onClick={() => useLogout()}>Salir</button>
+          <span>---</span>
+          <button className="home_button text-green-600" onClick={() => redirects.camera()}>Camara</button>
         </div> 
 
         {viewExpand}
@@ -72,6 +77,7 @@ const HomeWelcome = () => {
           <button className='home_button bg-green-500' onClick={() => redirects.register()}>Registrarse</button>
           <span></span>
           <button className="home_button text-green-600" onClick={() => redirects.login()}>Acceder</button>
+
         </div> 
       </>
   )

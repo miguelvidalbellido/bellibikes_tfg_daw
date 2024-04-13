@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'incidents',
     'stats',
     'maintenance',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [

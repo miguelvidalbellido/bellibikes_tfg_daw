@@ -177,7 +177,7 @@ const RentView = () => {
           <div className="flex justify-between">
             <div className="flex-1 bg-white rounded-lg shadow p-4 mx-1">
               <p className="text-xs text-gray-600">Precio</p>
-              <p className="text-lg font-semibold">€31</p>
+              <p className="text-lg font-semibold">--</p>
             </div>
 
             <div className="flex-1 bg-red-500 text-white rounded-lg shadow p-4 mx-1 flex justify-center items-center">
