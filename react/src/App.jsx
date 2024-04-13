@@ -29,7 +29,7 @@ const DataFinishRent = React.lazy(() => import("./pages/dataFinishRent/dataFinis
 const ReportIncident = React.lazy(() => import("./pages/reportIncident/ReportIncident"))
 const Notifies = React.lazy(() => import("./pages/notifiesList/NotifiesList"))
 const Profile = React.lazy(() => import("./pages/profile/Profile"))
-
+const CameraPage = React.lazy(() => import("./pages/cameraPage/CameraPage"))
 // Import Pages Web
 const HomeWeb = React.lazy(() => import("./pages/Home/HomeWeb"))
 const LoginWeb = React.lazy(() => import("./pages/auth/LoginWeb"))
@@ -72,6 +72,7 @@ function App() {
                             <Route path="/reportIncident" element={<ReportIncident />} />
                             <Route path="/notifies" element={<Notifies />} />
                             <Route path="/profile" element={<Profile />} />
+                            <Route path="/camera" element={<CameraPage />} />
                             <Route element={<AuthGuard />} >
                               <Route path="/login" element={<Login />} />
                               <Route path="/register" element={<Register />} />

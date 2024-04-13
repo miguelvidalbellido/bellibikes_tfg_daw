@@ -6,3 +6,5 @@ django-cors-headers==3.7.0
 channels==4.0.0
 uvicorn[standard]==0.15.0
 requests==2.28.0
+django-extensions
+pygraphviz

@@ -137,7 +137,8 @@ class IncidentView(viewsets.GenericViewSet):
             token = '7148193738:AAGruTZ6epTPtSsqnYrNP42d6QXQz9N9API'
             chat_id = '243340167'
             url = f'https://api.telegram.org/bot{token}/sendMessage'
-            data = {'chat_id': chat_id, 'text': f'Nueva incidencia creada sobre: {data["type"]} con la descripción: {data["description"]}'}
+            ## data = {'chat_id': chat_id, 'text': f'Nueva incidencia creada sobre: {data["type"]} con la descripción: {data["description"]}'}
+            data = {'chat_id': chat_id, 'text': f'Nueva incidencia creada sobre: {data["type"]} con la descripción: {data["description"]}', 'date': timezone.now()}
 
             response = requests.post(url, data=data)
         except Exception as e:
