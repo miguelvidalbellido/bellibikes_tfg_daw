@@ -40,7 +40,7 @@ const BikeRentalDetails = ({ dataRent, onOpenIssue }) => {
         </button>
         <div className="text-right mt-4">
           <span className="text-gray-500 text-sm">Costo del alquiler: </span>
-          <span className="text-xl text-white">$34</span>
+          <span className="text-xl text-white">--</span>
         </div>
       </div>
     </div>

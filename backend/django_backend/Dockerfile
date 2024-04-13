@@ -1,4 +1,10 @@
-FROM python:3.7.3-stretch
+FROM python:3.8-buster
+
+# Instalar Graphviz y dependencias
+RUN apt-get update && apt-get install -y graphviz libgraphviz-dev pkg-config
+
+# Instalar Graphviz y dependencias
+RUN apt-get update && apt-get install -y graphviz libgraphviz-dev pkg-config
 
 # Set unbuffered output for python
 ENV PYTHONUNBUFFERED 1
